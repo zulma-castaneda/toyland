@@ -1,0 +1,29 @@
+.app-container {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.header {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    border-width: 0 0 1px 0;
+    border-style: solid;
+    border-color: black;
+}
+
+.route-container {
+    flex: 98;
+    overflow: hidden;
+}
+
+.footer {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    border-width: 1px 0 0 0;
+    border-style: solid;
+    border-color: black;
+}
