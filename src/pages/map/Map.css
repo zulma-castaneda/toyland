@@ -7,6 +7,10 @@
 
 .map {
     height: 5000px;
+    background-image: url('../../../public/path.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: calc(100% - 50px) calc(100% - 50px);
 }
 
 .character {
