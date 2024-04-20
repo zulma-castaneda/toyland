@@ -1,7 +1,16 @@
-.box {
-    display: block;
-    width: 100px;
-    height: 100px;
-    background-color: red;
-    border: 1px solid black;
+#container {
+    visibility:hidden;
+    pointer-events: none;
+}
+
+#map {
+    position:absolute;
+    overflow:visible;
+}
+
+text {
+    font-size: 24px;
+    font-family: sans-serif;
+    color:#585858;
+    visibility:hidden;
 }

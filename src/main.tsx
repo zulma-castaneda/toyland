@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import gsap from 'gsap';
+import { gsap, ScrollTrigger, MotionPathPlugin } from 'gsap/all';
+import { GSDevTools } from "gsap-trial/GSDevTools";
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { useGSAP } from "@gsap/react";
 import App from './App.tsx';
@@ -8,7 +9,7 @@ import SinMap from './pages/sin-map/SinMap.tsx';
 import GaspMap from './pages/gasp-map/GaspMap.tsx';
 import './index.css';
 
-gsap.registerPlugin(useGSAP);
+gsap.registerPlugin(useGSAP, ScrollTrigger, MotionPathPlugin, GSDevTools);
 
 const router = createBrowserRouter([
   {
