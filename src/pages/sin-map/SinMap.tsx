@@ -1,13 +1,13 @@
-import './Map.css';
+import './SinMap.css';
 import { useEffect, useRef, useState } from 'react';
 
-function Map() {
+function SinMap() {
   const borderHeight = 19;
   const [offsetY, setOffsetY] = useState(0);
   const [offsetX, setOffsetX] = useState(0);
-  const mapRef = useRef<HTMLDivElement>(null);
-  const mapContainerRef = useRef<HTMLDivElement>(null);
-  const characterRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<HTMLDivElement | null>(null);
+  const mapContainerRef = useRef<HTMLDivElement | null>(null);
+  const characterRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     onScroll();
@@ -49,4 +49,4 @@ function Map() {
   );
 }
 
-export default Map;
+export default SinMap;
