@@ -4,7 +4,6 @@ import { useGSAP } from '@gsap/react';
 import './GaspMap.css';
 import { GSDevTools } from 'gsap-trial/GSDevTools';
 import mapConfig from './map-config.ts';
-import Timeline = gsap.core.Timeline;
 import { useNavigate } from 'react-router-dom';
 
 function GaspMap() {
@@ -13,9 +12,9 @@ function GaspMap() {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<SVGSVGElement | null>(null);
   const islandRefs = Array.from({length: mapConfig.islands.length}, () => useRef<SVGImageElement | null>(null));
-  const islandSelectAnimations: Timeline[] = [];
+  const islandSelectAnimations: ReturnType<typeof gsap.timeline>[] = [];
 
-  useGSAP((context, contextSafe) => {
+  useGSAP((_, contextSafe) => {
     const wh = mapContainerRef.current!.clientHeight;
     const speed = 20;
     const scrollDist = wh * speed;
@@ -45,7 +44,7 @@ function GaspMap() {
           end: '+=' + scrollEnd,
           scrub: 0.3,
           scroller: mapContainerRef.current,
-          onUpdate: contextSafe!(scrollTrigger => {
+          onUpdate: contextSafe!((scrollTrigger: ScrollTrigger) => {
             const rotation = gsap.getProperty('#ship', 'rotation') as number,
               flipY = Math.abs(rotation) > 110,
               flipX = scrollTrigger.direction === 1;
@@ -66,12 +65,12 @@ function GaspMap() {
         },
       }, 0);
 
-    const onSelectIsland = contextSafe!((islandId) => {
+    const onSelectIsland = contextSafe!((islandId: number) => {
       islandSelectAnimations[islandId].play(0);
       setSelectedIsland(islandId);
     });
 
-    const onUnselectIsland = contextSafe!((islandId) => {
+    const onUnselectIsland = contextSafe!((islandId: number) => {
       islandSelectAnimations[islandId].pause();
       gsap.to(islandRefs[islandId].current, { y: 0, ease: 'bounce.out', duration: 0.75 });
       setSelectedIsland(null);
