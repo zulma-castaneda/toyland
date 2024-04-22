@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap/all';
 import { useGSAP } from '@gsap/react';
 import './GaspMap.css';
@@ -86,18 +86,6 @@ function GaspMap() {
         }, end);
     });
 
-
-    const pos = {x: -mapConfig.map.width / 2, y: -mapConfig.map.height / 2};
-    const xSet = gsap.quickSetter('#container', 'x', 'px');
-    const ySet = gsap.quickSetter('#container', 'y', 'px');
-
-    gsap.ticker.add(contextSafe!(() => {
-      pos.x += (-gsap.getProperty('#ship', 'x') - pos.x);
-      pos.y += (-gsap.getProperty('#ship', 'y') - pos.y);
-      xSet(pos.x);
-      ySet(pos.y);
-    }));
-
     window.onresize = contextSafe!(() => {
       gsap.set('#container', {left: window.innerWidth / 2, top: window.innerHeight / 2});
     });
@@ -105,6 +93,23 @@ function GaspMap() {
     // For debugging animation
     GSDevTools.create({animation: main})
   }, {scope: mapContainerRef});
+
+  useEffect(() => {
+    const pos = {x: -mapConfig.map.width / 2, y: -mapConfig.map.height / 2};
+    const xSet = gsap.quickSetter('#container', 'x', 'px');
+    const ySet = gsap.quickSetter('#container', 'y', 'px');
+
+    function updateMapPosition() {
+      pos.x += (-gsap.getProperty('#ship', 'x') - pos.x);
+      pos.y += (-gsap.getProperty('#ship', 'y') - pos.y);
+      xSet(pos.x);
+      ySet(pos.y);
+    }
+
+    gsap.ticker.add(updateMapPosition);
+
+    return () => gsap.ticker.remove(updateMapPosition);
+  }, []);
 
   const onClick = () => {
     if(selectedIsland !== null) {
