@@ -45,17 +45,17 @@ function GaspMap() {
           end: '+=' + scrollEnd,
           scrub: 0.3,
           scroller: mapContainerRef.current,
-          onUpdate: scrollTrigger => {
+          onUpdate: contextSafe!(scrollTrigger => {
             const rotation = gsap.getProperty('#ship', 'rotation') as number,
               flipY = Math.abs(rotation) > 110,
               flipX = scrollTrigger.direction === 1;
             if (flipY !== flippedY || flipX !== flippedX) {
-              gsap.to("#ship", {scaleY: flipY ? -1 : 1, scaleX: flipX ? -1 : 1, duration: 0.25});
+              gsap.to('#ship', {scaleY: flipY ? -1 : 1, scaleX: flipX ? 1 : -1, duration: 0.25});
               flippedY = flipY;
               flippedX = flipX;
             }
-          },
-        }
+          }),
+        },
       })
       .to('#ship', {
         motionPath: {
@@ -102,6 +102,8 @@ function GaspMap() {
     window.onresize = contextSafe!(() => {
       gsap.set('#container', {left: window.innerWidth / 2, top: window.innerHeight / 2});
     });
+
+    main.seek(0.001);
 
     // For debugging animation
     GSDevTools.create({animation: main})
