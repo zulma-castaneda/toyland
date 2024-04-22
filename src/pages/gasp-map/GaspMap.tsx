@@ -15,6 +15,7 @@ function GaspMap() {
   const islandSelectAnimations: ReturnType<typeof gsap.timeline>[] = [];
 
   useGSAP((_, contextSafe) => {
+    const ww = mapContainerRef.current!.clientWidth;
     const wh = mapContainerRef.current!.clientHeight;
     const speed = 20;
     const scrollDist = wh * speed;
@@ -28,8 +29,8 @@ function GaspMap() {
       width: mapConfig.map.width,
       height: mapConfig.map.height,
       transformOrigin: '0 0',
-      left: window.innerWidth / 2,
-      top: window.innerHeight / 2,
+      left: ww / 2,
+      top: wh / 2,
       xPercent: -50,
       yPercent: -50,
       autoAlpha: 1
