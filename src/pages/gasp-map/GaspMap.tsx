@@ -12,7 +12,7 @@ function GaspMap() {
   const [selectedIsland, setSelectedIsland] = useState<null | number>(null);
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<SVGSVGElement | null>(null);
-  const islandRefs = [];
+  const islandRefs = Array.from({length: mapConfig.islands.length}, () => useRef<SVGImageElement | null>(null));
   const islandSelectAnimations: Timeline[] = [];
 
   useGSAP((context, contextSafe) => {
@@ -60,7 +60,7 @@ function GaspMap() {
 
     const onUnselectIsland = contextSafe!((islandId) => {
       islandSelectAnimations[islandId].pause();
-      gsap.to(islandRefs[islandId], { y: 0, ease: 'bounce.out', duration: 0.75 });
+      gsap.to(islandRefs[islandId].current, { y: 0, ease: 'bounce.out', duration: 0.75 });
       setSelectedIsland(null);
     });
 
@@ -68,19 +68,19 @@ function GaspMap() {
       const { start, end} = mapConfig.islands[index];
       const selectAnimation = gsap
         .timeline({defaults: {duration: 0.5}})
-        .to(island, { y: -30, ease: 'power1.out' })
-        .to(island, { y: 0, ease: 'power1.in' });
+        .to(island.current, { y: -30, ease: 'power1.out' })
+        .to(island.current, { y: 0, ease: 'power1.in' });
 
       selectAnimation.pause();
       selectAnimation.repeat(-1);
       islandSelectAnimations[index] = selectAnimation;
 
       main
-        .set(island, {
+        .set(island.current, {
           onComplete: () => onSelectIsland(index),
           onReverseComplete: () => onUnselectIsland(index),
         }, start)
-        .set(island, {
+        .set(island.current, {
           onComplete: () => onUnselectIsland(index),
           onReverseComplete: () => onSelectIsland(index),
         }, end);
@@ -128,7 +128,7 @@ function GaspMap() {
             {mapConfig.islands.map((islandConfig, index) => (
               <image
                 key={index}
-                ref={e => {islandRefs[index] = e;}}
+                ref={islandRefs[index]}
                 x={islandConfig.x}
                 y={islandConfig.y}
                 width={islandConfig.width}
