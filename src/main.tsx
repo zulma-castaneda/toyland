@@ -7,6 +7,7 @@ import { useGSAP } from "@gsap/react";
 import App from './App.tsx';
 import SinMap from './pages/sin-map/SinMap.tsx';
 import GaspMap from './pages/gasp-map/GaspMap.tsx';
+import SelectedIsland from './pages/selected-island/SelectedIsland.tsx';
 import './index.css';
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, MotionPathPlugin, GSDevTools);
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: '/gsap',
         element: <GaspMap/>
+      },
+      {
+        path: '/selected-island',
+        element: <SelectedIsland/>
       },
     ],
   },

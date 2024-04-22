@@ -1,12 +1,15 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { gsap } from 'gsap/all';
 import { useGSAP } from '@gsap/react';
 import './GaspMap.css';
 import { GSDevTools } from 'gsap-trial/GSDevTools';
 import mapConfig from './map-config.ts';
 import Timeline = gsap.core.Timeline;
+import { useNavigate } from 'react-router-dom';
 
 function GaspMap() {
+  const navigate = useNavigate();
+  const [selectedIsland, setSelectedIsland] = useState<null | number>(null);
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<SVGSVGElement | null>(null);
   const islandRefs = [];
@@ -42,7 +45,7 @@ function GaspMap() {
           scroller: mapContainerRef.current,
         }
       })
-      .to('#point', {
+      .to('#ship', {
         motionPath: {
           path: '#path',
           align: '#path',
@@ -51,14 +54,14 @@ function GaspMap() {
       }, 0);
 
     const onSelectIsland = contextSafe!((islandId) => {
-      console.log(`Island ${islandId} selected`);
       islandSelectAnimations[islandId].play(0);
+      setSelectedIsland(islandId);
     });
 
     const onUnselectIsland = contextSafe!((islandId) => {
-      console.log(`Island ${islandId} unselected`);
       islandSelectAnimations[islandId].pause();
       gsap.to(islandRefs[islandId], { y: 0, ease: 'bounce.out', duration: 0.75 });
+      setSelectedIsland(null);
     });
 
     islandRefs.forEach((island, index) => {
@@ -89,8 +92,8 @@ function GaspMap() {
     const ySet = gsap.quickSetter('#container', 'y', 'px');
 
     gsap.ticker.add(contextSafe!(() => {
-      pos.x += (-gsap.getProperty('#point', 'x') - pos.x);
-      pos.y += (-gsap.getProperty('#point', 'y') - pos.y);
+      pos.x += (-gsap.getProperty('#ship', 'x') - pos.x);
+      pos.y += (-gsap.getProperty('#ship', 'y') - pos.y);
       xSet(pos.x);
       ySet(pos.y);
     }));
@@ -103,8 +106,14 @@ function GaspMap() {
     GSDevTools.create({animation: main})
   }, {scope: mapContainerRef});
 
+  const onClick = () => {
+    if(selectedIsland !== null) {
+      navigate(`/selected-island?islandId=${selectedIsland}`);
+    }
+  };
+
   return (
-    <div className='map-container' ref={mapContainerRef}>
+    <div className='map-container' ref={mapContainerRef} onClick={onClick}>
       <div id='scrollDist'></div>
       <div id='container'>
         <svg id='map' ref={mapRef} width={mapConfig.map.width} height={mapConfig.map.height}>
@@ -128,7 +137,7 @@ function GaspMap() {
               />
             ))}
           </g>
-          <g id='point'>
+          <g id='ship'>
             <image
               x={(mapConfig.map.width / 2) - (mapConfig.ship.width / 2)}
               y={(mapConfig.map.height / 2) - (mapConfig.ship.height / 2)}

@@ -33,7 +33,7 @@ export default {
     },
     {
       start: 3.52,
-      end: 3.80,
+      end: 3.87,
       x: 1350,
       y: 700,
       width: '100px',
