@@ -20,6 +20,8 @@ function GaspMap() {
     const speed = 20;
     const scrollDist = wh * speed;
     const scrollEnd = wh * (speed - 1);
+    let flippedX = false;
+    let flippedY = false;
 
     gsap.set('#scrollDist', {width: '100%', height: scrollDist});
     gsap.set('#container', {
@@ -43,6 +45,16 @@ function GaspMap() {
           end: '+=' + scrollEnd,
           scrub: 0.3,
           scroller: mapContainerRef.current,
+          onUpdate: scrollTrigger => {
+            const rotation = gsap.getProperty('#ship', 'rotation') as number,
+              flipY = Math.abs(rotation) > 110,
+              flipX = scrollTrigger.direction === 1;
+            if (flipY !== flippedY || flipX !== flippedX) {
+              gsap.to("#ship", {scaleY: flipY ? -1 : 1, scaleX: flipX ? -1 : 1, duration: 0.25});
+              flippedY = flipY;
+              flippedX = flipX;
+            }
+          },
         }
       })
       .to('#ship', {
@@ -50,6 +62,7 @@ function GaspMap() {
           path: '#path',
           align: '#path',
           alignOrigin: [0.5, 0.5],
+          autoRotate: 0
         },
       }, 0);
 
