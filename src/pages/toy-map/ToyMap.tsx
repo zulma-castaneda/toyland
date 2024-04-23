@@ -144,7 +144,8 @@ export function ToyMap() {
             d={mapConfig.ship.path}
             fill='none'
             stroke='#676767'
-            strokeWidth='10'
+            strokeWidth='5'
+            strokeDasharray="7,5"
           />
           <g>
             {mapConfig.islands.map((islandConfig, index) => (
