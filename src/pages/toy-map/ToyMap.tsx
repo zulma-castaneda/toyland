@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap/all';
 import { useGSAP } from '@gsap/react';
-import './GaspMap.css';
+import './ToyMap.css';
 import { GSDevTools } from 'gsap-trial/GSDevTools';
-import mapConfig from './map-config.ts';
+import { mapConfig } from './map-config.ts';
 import { useNavigate } from 'react-router-dom';
 
-function GaspMap() {
+export function ToyMap() {
   const navigate = useNavigate();
   const [selectedIsland, setSelectedIsland] = useState<null | number>(null);
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
@@ -106,7 +106,9 @@ function GaspMap() {
     main.seek(0.001);
 
     // For debugging animation
-    GSDevTools.create({animation: main})
+    if(import.meta.env.DEV) {
+      GSDevTools.create({animation: main});
+    }
   }, {scope: mapContainerRef});
 
   useEffect(() => {
@@ -171,5 +173,3 @@ function GaspMap() {
     </div>
   );
 }
-
-export default GaspMap;

@@ -4,13 +4,18 @@ import { gsap, ScrollTrigger, MotionPathPlugin } from 'gsap/all';
 import { GSDevTools } from "gsap-trial/GSDevTools";
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { useGSAP } from "@gsap/react";
-import App from './App.tsx';
-import SinMap from './pages/sin-map/SinMap.tsx';
-import GaspMap from './pages/gasp-map/GaspMap.tsx';
+import { App } from './App.tsx';
+import { ToyMap } from './pages/toy-map/ToyMap.tsx';
 import SelectedIsland from './pages/selected-island/SelectedIsland.tsx';
 import './index.css';
 
-gsap.registerPlugin(useGSAP, ScrollTrigger, MotionPathPlugin, GSDevTools);
+const baseGsapPlugins: Parameters<typeof gsap.registerPlugin>[0][] = [useGSAP, ScrollTrigger, MotionPathPlugin];
+
+if(import.meta.env.DEV) {
+  baseGsapPlugins.push(GSDevTools);
+}
+
+gsap.registerPlugin(...baseGsapPlugins);
 
 const router = createBrowserRouter([
   {
@@ -18,12 +23,8 @@ const router = createBrowserRouter([
     element: <App/>,
     children: [
       {
-        path: '',
-        element: <SinMap/>
-      },
-      {
-        path: '/gsap',
-        element: <GaspMap/>
+        path: '/',
+        element: <ToyMap/>
       },
       {
         path: '/selected-island',

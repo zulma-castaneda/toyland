@@ -1,4 +1,4 @@
-export default {
+export const mapConfig = {
   map: {
     width: 1600,
     height: 900,
