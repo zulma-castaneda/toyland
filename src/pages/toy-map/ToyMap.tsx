@@ -7,13 +7,15 @@ import { mapConfig } from './map-config.ts';
 import { useNavigate } from 'react-router-dom';
 import { Introduction } from '../introduction/Introduction.tsx';
 
+type Timeline = ReturnType<typeof gsap.timeline>;
+
 export function ToyMap() {
   const navigate = useNavigate();
   const [selectedIsland, setSelectedIsland] = useState<null | number>(null);
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<SVGSVGElement | null>(null);
   const islandRefs = Array.from({length: mapConfig.islands.length}, () => useRef<SVGImageElement | null>(null));
-  const islandSelectAnimations: ReturnType<typeof gsap.timeline>[] = [];
+  const islandSelectAnimations: Timeline[] = [];
   const ww = useRef(window.innerWidth);
   const wh = useRef(window.innerHeight);
 
@@ -24,39 +26,78 @@ export function ToyMap() {
     let flippedX = false;
     let flippedY = false;
 
+    const updateShipOrientation = (scrollTrigger: ScrollTrigger) => {
+      const rotation = gsap.getProperty('#ship', 'rotation') as number;
+      const flipY = Math.abs(rotation) > 110;
+      const flipX = scrollTrigger.direction === 1;
+
+      if (flipY !== flippedY || flipX !== flippedX) {
+        gsap.to('#ship', {scaleY: flipY ? -1 : 1, scaleX: flipX ? 1 : -1, duration: 0.25});
+        flippedY = flipY;
+        flippedX = flipX;
+      }
+    };
+
+    const onSelectIsland = (islandId: number) => {
+      islandSelectAnimations[islandId].play(0);
+      setSelectedIsland(islandId);
+    };
+
+    const onUnselectIsland = (islandId: number) => {
+      islandSelectAnimations[islandId].pause();
+      gsap.to(islandRefs[islandId].current, { y: 0, ease: 'bounce.out', duration: 0.75 });
+      setSelectedIsland(null);
+    };
+
+    const generateIslandsSelectors = (timeline: Timeline) => {
+      islandRefs.forEach((island, index) => {
+        const { start, end} = mapConfig.islands[index];
+        const selectAnimation = gsap
+          .timeline({defaults: {duration: 0.5}})
+          .to(island.current, { y: -30, ease: 'power1.out' })
+          .to(island.current, { y: 0, ease: 'power1.in' });
+
+        selectAnimation.pause();
+        selectAnimation.repeat(-1);
+        islandSelectAnimations[index] = selectAnimation;
+
+        timeline.set(island.current, {
+          onComplete: contextSafe!(() => onSelectIsland(index)),
+          onReverseComplete: contextSafe!(() => onUnselectIsland(index)),
+        }, start);
+
+        timeline.set(island.current, {
+          onComplete: contextSafe!(() => onUnselectIsland(index)),
+          onReverseComplete: contextSafe!(() => onSelectIsland(index)),
+        }, end);
+      });
+    };
+
+    const onResize = () => {
+      gsap.set('#container', {
+        left: window.innerWidth / 2,
+        top: window.innerHeight / 2,
+      });
+    };
+
     gsap.set('#scrollDist', {width: '100%', height: scrollDist});
     gsap.set('#container', {
-      position: 'fixed',
       width: mapConfig.map.width,
       height: mapConfig.map.height,
-      transformOrigin: '0 0',
       left: ww.current / 2,
       top: wh.current / 2,
-      xPercent: -50,
-      yPercent: -50,
-      autoAlpha: 1,
-      zIndex: -1,
     });
 
-    const main = gsap
+    const mainTimeline = gsap
       .timeline({
         defaults: {duration: 10, ease: 'none'},
         scrollTrigger: {
           trigger: '#scrollDist',
           start: 'top top',
           end: '+=' + scrollEnd,
-          scrub: 0.3,
+          scrub: true,
           scroller: mapContainerRef.current,
-          onUpdate: contextSafe!((scrollTrigger: ScrollTrigger) => {
-            const rotation = gsap.getProperty('#ship', 'rotation') as number,
-              flipY = Math.abs(rotation) > 110,
-              flipX = scrollTrigger.direction === 1;
-            if (flipY !== flippedY || flipX !== flippedX) {
-              gsap.to('#ship', {scaleY: flipY ? -1 : 1, scaleX: flipX ? 1 : -1, duration: 0.25});
-              flippedY = flipY;
-              flippedX = flipX;
-            }
-          }),
+          onUpdate: contextSafe!(updateShipOrientation),
         },
       })
       .to('#ship', {
@@ -68,48 +109,14 @@ export function ToyMap() {
         },
       }, 0);
 
-    const onSelectIsland = contextSafe!((islandId: number) => {
-      islandSelectAnimations[islandId].play(0);
-      setSelectedIsland(islandId);
-    });
+    mainTimeline.seek(0.001);
 
-    const onUnselectIsland = contextSafe!((islandId: number) => {
-      islandSelectAnimations[islandId].pause();
-      gsap.to(islandRefs[islandId].current, { y: 0, ease: 'bounce.out', duration: 0.75 });
-      setSelectedIsland(null);
-    });
-
-    islandRefs.forEach((island, index) => {
-      const { start, end} = mapConfig.islands[index];
-      const selectAnimation = gsap
-        .timeline({defaults: {duration: 0.5}})
-        .to(island.current, { y: -30, ease: 'power1.out' })
-        .to(island.current, { y: 0, ease: 'power1.in' });
-
-      selectAnimation.pause();
-      selectAnimation.repeat(-1);
-      islandSelectAnimations[index] = selectAnimation;
-
-      main
-        .set(island.current, {
-          onComplete: () => onSelectIsland(index),
-          onReverseComplete: () => onUnselectIsland(index),
-        }, start)
-        .set(island.current, {
-          onComplete: () => onUnselectIsland(index),
-          onReverseComplete: () => onSelectIsland(index),
-        }, end);
-    });
-
-    window.onresize = contextSafe!(() => {
-      gsap.set('#container', {left: window.innerWidth / 2, top: window.innerHeight / 2});
-    });
-
-    main.seek(0.001);
+    generateIslandsSelectors(mainTimeline);
+    window.onresize = contextSafe!(onResize);
 
     // For debugging animation
     if(import.meta.env.DEV) {
-      GSDevTools.create({animation: main});
+      GSDevTools.create({animation: mainTimeline});
     }
   }, {scope: mapContainerRef});
 

@@ -1,6 +1,9 @@
 #container {
-    visibility:hidden;
     pointer-events: none;
+    position: fixed;
+    transform-origin: 0 0;
+    transform: translate(-50%, -50%);
+    z-index: -1;
 }
 
 .map-container {
