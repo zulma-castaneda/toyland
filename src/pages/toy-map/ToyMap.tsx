@@ -137,8 +137,18 @@ export function ToyMap() {
     return () => gsap.ticker.remove(updateMapPosition);
   }, []);
 
+  useEffect(() => {
+    const currentScroll = window.sessionStorage.getItem('currentScroll');
+    const parsedScroll = Number(currentScroll);
+    if(!isNaN(parsedScroll)) {
+      mapContainerRef.current?.scroll(0, parsedScroll);
+    }
+  }, []);
+
   const onClick = () => {
     if(selectedIsland !== null) {
+      const currentScroll = mapContainerRef.current?.scrollTop;
+      window.sessionStorage.setItem('currentScroll', currentScroll?.toString() || '0');
       navigate(`/selected-island?islandId=${selectedIsland}`);
     }
   };
