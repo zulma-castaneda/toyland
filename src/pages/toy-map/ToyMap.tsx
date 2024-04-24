@@ -115,8 +115,8 @@ export function ToyMap() {
 
   useEffect(() => {
     const pos = {x: -mapConfig.map.width / 2, y: -mapConfig.map.height / 2};
-    const xSet = gsap.quickSetter('#container', 'x', 'px');
-    const ySet = gsap.quickSetter('#container', 'y', 'px');
+    const xSet = gsap.quickSetter('#map', 'x', 'px');
+    const ySet = gsap.quickSetter('#map', 'y', 'px');
 
     function updateMapPosition() {
       pos.x += (-gsap.getProperty('#ship', 'x') - pos.x);
