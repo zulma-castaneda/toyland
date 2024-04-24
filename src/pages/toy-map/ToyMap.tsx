@@ -5,6 +5,7 @@ import './ToyMap.css';
 import { GSDevTools } from 'gsap-trial/GSDevTools';
 import { mapConfig } from './map-config.ts';
 import { useNavigate } from 'react-router-dom';
+import { Introduction } from '../introduction/Introduction.tsx';
 
 export function ToyMap() {
   const navigate = useNavigate();
@@ -13,13 +14,13 @@ export function ToyMap() {
   const mapRef = useRef<SVGSVGElement | null>(null);
   const islandRefs = Array.from({length: mapConfig.islands.length}, () => useRef<SVGImageElement | null>(null));
   const islandSelectAnimations: ReturnType<typeof gsap.timeline>[] = [];
+  const ww = useRef(window.innerWidth);
+  const wh = useRef(window.innerHeight);
 
   useGSAP((_, contextSafe) => {
-    const ww = mapContainerRef.current!.clientWidth;
-    const wh = mapContainerRef.current!.clientHeight;
     const speed = 20;
-    const scrollDist = wh * speed;
-    const scrollEnd = wh * (speed - 1);
+    const scrollDist = wh.current * speed;
+    const scrollEnd = wh.current * (speed - 1);
     let flippedX = false;
     let flippedY = false;
 
@@ -29,11 +30,12 @@ export function ToyMap() {
       width: mapConfig.map.width,
       height: mapConfig.map.height,
       transformOrigin: '0 0',
-      left: ww / 2,
-      top: wh / 2,
+      left: ww.current / 2,
+      top: wh.current / 2,
       xPercent: -50,
       yPercent: -50,
-      autoAlpha: 1
+      autoAlpha: 1,
+      zIndex: -1,
     });
 
     const main = gsap
@@ -136,6 +138,7 @@ export function ToyMap() {
 
   return (
     <div className='map-container' ref={mapContainerRef} onClick={onClick}>
+      <Introduction/>
       <div id='scrollDist'></div>
       <div id='container'>
         <svg id='map' ref={mapRef} width={mapConfig.map.width} height={mapConfig.map.height}>
