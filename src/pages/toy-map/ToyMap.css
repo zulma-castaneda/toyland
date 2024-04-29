@@ -1,26 +1,27 @@
 #container {
-    pointer-events: none;
-    position: fixed;
-    transform-origin: 0 0;
-    transform: translate(-50%, -50%);
-    z-index: -1;
+  pointer-events: none;
+  position: fixed;
+  transform-origin: 0 0;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  background: repeat url(../../../public/water.jpg);
 }
 
 .map-container {
-    display: block;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
 }
 
 #map {
-    position:absolute;
-    overflow:visible;
+  position: absolute;
+  overflow: visible;
 }
 
 text {
-    font-size: 24px;
-    font-family: sans-serif;
-    color:#585858;
-    visibility:hidden;
+  font-size: 24px;
+  font-family: sans-serif;
+  color: #585858;
+  visibility: hidden;
 }
