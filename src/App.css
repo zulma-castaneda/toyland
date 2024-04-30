@@ -17,7 +17,7 @@
 
 .route-container {
   flex: 98;
-  overflow: hidden;
+  overflow: scroll;
 }
 
 .footer {
