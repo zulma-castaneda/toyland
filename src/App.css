@@ -16,8 +16,9 @@
 }
 
 .route-container {
+  display: block;
+  position: relative;
   flex: 98;
-  overflow: scroll;
 }
 
 .footer {

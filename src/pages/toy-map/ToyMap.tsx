@@ -12,7 +12,7 @@ type Timeline = ReturnType<typeof gsap.timeline>;
 export function ToyMap() {
   const navigate = useNavigate();
   const [selectedIsland, setSelectedIsland] = useState<null | number>(null);
-  const mapContainerRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<SVGSVGElement | null>(null);
   const islandRefs = Array.from({length: mapConfig.islands.length}, () => useRef<SVGImageElement | null>(null));
   const islandSelectAnimations: Timeline[] = [];
@@ -74,14 +74,14 @@ export function ToyMap() {
     };
 
     const onResize = () => {
-      gsap.set('#container', {
+      gsap.set('#map-container', {
         left: window.innerWidth / 2,
         top: window.innerHeight / 2,
       });
     };
 
     gsap.set('#scrollDist', {width: '100%', height: scrollDist});
-    gsap.set('#container', {
+    gsap.set('#map-container', {
       width: mapConfig.map.width,
       height: mapConfig.map.height,
       left: ww / 2,
@@ -96,7 +96,7 @@ export function ToyMap() {
           start: 'top top',
           end: '+=' + scrollEnd,
           scrub: true,
-          scroller: mapContainerRef.current,
+          scroller: containerRef.current,
           onUpdate: contextSafe!(updateShipOrientation),
         },
       })
@@ -118,7 +118,7 @@ export function ToyMap() {
     if(import.meta.env.DEV) {
       GSDevTools.create({animation: mainTimeline});
     }
-  }, {scope: mapContainerRef});
+  }, {scope: containerRef});
 
   useEffect(() => {
     const pos = {x: -mapConfig.map.width / 2, y: -mapConfig.map.height / 2};
@@ -141,23 +141,23 @@ export function ToyMap() {
     const currentScroll = window.sessionStorage.getItem('currentScroll');
     const parsedScroll = Number(currentScroll);
     if(!isNaN(parsedScroll)) {
-      mapContainerRef.current?.scroll(0, parsedScroll);
+      containerRef.current?.scroll(0, parsedScroll);
     }
   }, []);
 
   const onClick = () => {
     if(selectedIsland !== null) {
-      const currentScroll = mapContainerRef.current?.scrollTop;
+      const currentScroll = containerRef.current?.scrollTop;
       window.sessionStorage.setItem('currentScroll', currentScroll?.toString() || '0');
       navigate(`/selected-island?islandId=${selectedIsland}`);
     }
   };
 
   return (
-    <div className='map-container' ref={mapContainerRef} onClick={onClick}>
+    <div id='container' ref={containerRef} onClick={onClick}>
       <Introduction/>
       <div id='scrollDist'></div>
-      <div id='container'>
+      <div id='map-container'>
         <svg id='map' ref={mapRef} width={mapConfig.map.width} height={mapConfig.map.height}>
           <path
             id='path'
