@@ -16,13 +16,13 @@ export function ToyMap() {
   const mapRef = useRef<SVGSVGElement | null>(null);
   const islandRefs = Array.from({length: mapConfig.islands.length}, () => useRef<SVGImageElement | null>(null));
   const islandSelectAnimations: Timeline[] = [];
-  const ww = useRef(window.innerWidth);
-  const wh = useRef(window.innerHeight);
 
   useGSAP((_, contextSafe) => {
     const speed = 20;
-    const scrollDist = wh.current * speed;
-    const scrollEnd = wh.current * (speed - 1);
+    const ww = window.innerWidth;
+    const wh = window.innerHeight;
+    const scrollDist = wh * speed;
+    const scrollEnd = wh * (speed - 1);
     let flippedX = false;
     let flippedY = false;
 
@@ -84,8 +84,8 @@ export function ToyMap() {
     gsap.set('#container', {
       width: mapConfig.map.width,
       height: mapConfig.map.height,
-      left: ww.current / 2,
-      top: wh.current / 2,
+      left: ww / 2,
+      top: wh / 2,
     });
 
     const mainTimeline = gsap
