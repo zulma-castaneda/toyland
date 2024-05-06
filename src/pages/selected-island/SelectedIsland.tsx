@@ -1,8 +1,11 @@
 import { useSearchParams } from "react-router-dom";
+import "react-jigsaw-puzzle/lib/jigsaw-puzzle.css";
+import "./PuzzlesIsland.css";
+import { JigsawPuzzle } from './jigsaw-puzzle/jigsaw-puzzle.tsx';
 
 const PuzzlesIsland = () => {
   return (
-    <>
+    <div className='puzzles-island'>
       <h2>Bienvenidos a la Isla de los Rompecabezas</h2>
       <p>
         ¡Hola, pequeños exploradores! Bienvenidos a la Isla de los Rompecabezas,
@@ -56,7 +59,15 @@ const PuzzlesIsland = () => {
         src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/15-puzzle-02.jpg/1200px-15-puzzle-02.jpg"
         alt=""
       />
-    </>
+      <div className='puzzle-container'>
+        <JigsawPuzzle
+          imageSrc="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/15-puzzle-02.jpg/1200px-15-puzzle-02.jpg"
+          rows={3}
+          columns={3}
+          onSolved={() => console.log("Solved!")}
+        />
+      </div>
+    </div>
   );
 };
 
