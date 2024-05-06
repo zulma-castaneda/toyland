@@ -1,4 +1,31 @@
 .intro {
-    padding: 5px;
-    background-color: white;
+  padding: 5px;
+  background-color: bisque;
+}
+.chewy-regular {
+  font-family: "Chewy", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.header {
+  font-family: "Chewy", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  text-align: center;
+}
+.header-title {
+  font-size: 5em;
+  margin-bottom: 20px;
+}
+
+.header-title {
+  font-size: 4em;
+  margin-bottom: 20px;
+}
+
+.intro--img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

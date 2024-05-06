@@ -1,0 +1,50 @@
+/* VVV Everything you need VVV */
+
+#scroll-down-animation {
+  position: relative;
+  margin: 0 auto;
+}
+
+.scroll-indicator--text {
+  color: black;
+  font-family: "Roboto", "Arial", sans-serif;
+  font-weight: 200;
+  font-size: 16px;
+  text-align: center;
+}
+
+.mouse {
+  margin: 0 auto;
+  display: block;
+  border-radius: 50px;
+  border: 2px solid #000;
+  height: 100px;
+  width: 50px;
+  position: relative;
+}
+
+.move {
+  position: absolute;
+  background-color: #000;
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: move 2s linear infinite;
+}
+
+@keyframes move {
+  0% {
+    transform: translate(-50%, 10px);
+    opacity: 0;
+  }
+  50% {
+    transform: translate(-50%, 40px);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, 80px);
+    opacity: 0;
+  }
+}
