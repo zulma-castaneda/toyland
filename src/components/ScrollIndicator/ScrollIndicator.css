@@ -36,7 +36,7 @@
 
 @keyframes move {
   0% {
-    transform: translate(-50%, 10px);
+    transform: translate(-50%, 80px);
     opacity: 0;
   }
   50% {
@@ -44,7 +44,7 @@
     opacity: 1;
   }
   100% {
-    transform: translate(-50%, 80px);
+    transform: translate(-50%, 10px);
     opacity: 0;
   }
 }

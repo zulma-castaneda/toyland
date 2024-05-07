@@ -65,7 +65,7 @@ export function Introduction() {
         <p>
           <ol>
             <li>
-              Desliza hacia abajo y observa cómo el barco comienza a moverse.
+              Desliza hacia arriba y observa cómo el barco comienza a moverse.
             </li>
             <li>
               Cuando te acerques a una isla, verás que el barco empieza a

@@ -6,6 +6,15 @@ body {
   font-weight: 400;
   font-style: normal;
 }
+h1,
+h2,
+h3 {
+  font-family: "Chewy", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 2em;
+  margin: 0;
+}
 
 #root {
   display: flex;

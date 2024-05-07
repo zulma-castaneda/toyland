@@ -5,7 +5,7 @@ export function ScrollIndicator() {
       <span className="mouse">
         <span className="move"></span>
       </span>
-      <h2 className="scroll-indicator--text">Desliza hacia abajo</h2>
+      <h2 className="scroll-indicator--text">Desliza hacia arriba</h2>
     </div>
   );
 }

@@ -37,4 +37,54 @@
   max-width: 1000px;
   margin: 0 auto;
   text-align: justify;
+  padding: 20px;
+}
+
+.header {
+  text-align: center;
+}
+
+.header-title {
+  font-size: 4em;
+  margin-bottom: 20px;
+}
+
+.two-col-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.text-two-col {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.img-two-col {
+  flex: 1;
+}
+
+.img-two-col img {
+  max-width: 100%;
+  height: auto;
+}
+
+figcaption {
+  text-align: center;
+  margin-top: 10px;
+  font-style: italic;
+  font-size: 0.9em;
+}
+
+@media screen and (max-width: 768px) {
+  .two-col-container {
+    flex-direction: column; /* Cambiar a columna en móvil */
+  }
+
+  .text-two-col,
+  .img-two-col {
+    flex: initial; /* Volver al tamaño inicial en móvil */
+  }
 }
