@@ -1,5 +1,4 @@
 import { useSearchParams } from "react-router-dom";
-import "react-jigsaw-puzzle/lib/jigsaw-puzzle.css";
 import "./PuzzlesIsland.css";
 import { JigsawPuzzle } from './jigsaw-puzzle/jigsaw-puzzle.tsx';
 
