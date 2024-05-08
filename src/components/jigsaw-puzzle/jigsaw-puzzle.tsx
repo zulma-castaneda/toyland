@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from "react";
+import React, { CSSProperties, FC, useCallback, useEffect, useRef, useState } from "react";
 
 const clamp = (value: number, min: number, max: number) => {
   if (value < min) {
@@ -179,24 +179,32 @@ export const JigsawPuzzle: FC<JigsawPuzzleProps> = ({
       event.preventDefault()
     }}
   >
-    {tiles && rootSize && imageSize && tiles.map(tile => <div
-      draggable={false}
-      onMouseDown={event => onTileMouseDown(tile, event)}
-      onTouchStart={event => onTileMouseDown(tile, event)}
-      key={tile.id}
-      className={`jigsaw-puzzle__piece ${tile.solved ? ' jigsaw-puzzle__piece--solved' : ''} `}
-      style={{
-        position: 'absolute',
-        height: `${1 / rows * 100}%`,
-        width: `${1 / columns * 100}%`,
-        backgroundImage: `url(${imageSrc})`,
-        backgroundSize: `${rootSize.width}px ${rootSize.height}px`,
-        backgroundPositionX: `${tile.correctPosition % columns / (columns - 1) * 100}%`,
-        backgroundPositionY: `${Math.floor(tile.correctPosition / columns) / (rows - 1) * 100}%`,
-        left: `${tile.currentPosXPerc * rootSize.width}px`,
-        top: `${tile.currentPosYPerc * rootSize.height}px`,
-        touchAction: tile.solved ? 'unset' : 'none',
-      }}
-    />)}
+    {tiles && rootSize && imageSize && tiles.map(tile => {
+      const circleSize = 42; //TODO: Calculate according to windows size
+      const height = `${1 / rows * 100}%`;
+      const width = `${1 / columns * 100}%`
+      return (
+        <div
+          draggable={false}
+          onMouseDown={event => onTileMouseDown(tile, event)}
+          onTouchStart={event => onTileMouseDown(tile, event)}
+          key={tile.id}
+          className={`jigsaw-puzzle__piece ${tile.solved ? ' jigsaw-puzzle__piece--solved' : ''} jigsaw-puzzle__piece-${tile.correctPosition} `}
+          style={{
+            '--r': `${circleSize}px`,
+            position: 'absolute',
+            height,
+            width,
+            backgroundImage: `url(${imageSrc})`,
+            backgroundSize: `${rootSize.width}px ${rootSize.height}px`,
+            backgroundPositionX: `${tile.correctPosition % columns / (columns - 1) * 100}%`,
+            backgroundPositionY: `${Math.floor(tile.correctPosition / columns) / (rows - 1) * 100}%`,
+            left: `${tile.currentPosXPerc * rootSize.width}px`,
+            top: `${tile.currentPosYPerc * rootSize.height}px`,
+            touchAction: tile.solved ? 'unset' : 'none',
+          } as CSSProperties}
+        />
+      );
+    })}
   </div>;
 }

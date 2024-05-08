@@ -1,4 +1,4 @@
-.puzzles-island img{
+.puzzles-island img {
     width: 100%;
 }
 
@@ -7,7 +7,7 @@
 }
 
 .jigsaw-puzzle {
-    position: relative
+    position: relative;
 }
 
 .jigsaw-puzzle__piece {
@@ -15,7 +15,10 @@
     border: 1px solid #cecece;
     cursor: pointer;
     z-index: 1;
-    user-select: none
+    user-select: none;
+    -webkit-mask: var(--_m);
+    mask: var(--_m);
+    --r: 0;
 }
 
 .jigsaw-puzzle__piece.jigsaw-puzzle__piece--solved {
@@ -26,4 +29,26 @@
 .jigsaw-puzzle__piece.jigsaw-puzzle__piece--dragging {
     z-index: 5;
     box-shadow: 1px 1px 5px 0 #00000091
+}
+
+.jigsaw-puzzle > .jigsaw-puzzle__piece-0 {
+    --_m: radial-gradient(calc(var(--r)) at 100% 50%, #0000 95%, #000) top/100% calc(100% - var(--r)) no-repeat,
+    radial-gradient(var(--r) at left 50% bottom var(--r), #000 95%, #0000);
+}
+
+.jigsaw-puzzle > .jigsaw-puzzle__piece-1 {
+    place-self: end;
+    --_m: radial-gradient(calc(var(--r)) at 50% 100%, #0000 95%, #000) right/calc(100% - var(--r)) 100% no-repeat,
+    radial-gradient(var(--r) at top 50% left var(--r), #000 95%, #0000);
+}
+
+.jigsaw-puzzle > .jigsaw-puzzle__piece-2 {
+    --_m: radial-gradient(calc(var(--r)) at 50% 0%, #0000 95%, #000) left/calc(100% - var(--r)) 100% no-repeat,
+    radial-gradient(var(--r) at top 50% right var(--r), #000 95%, #0000);
+}
+
+.jigsaw-puzzle > .jigsaw-puzzle__piece-3 {
+    place-self: end;
+    --_m: radial-gradient(calc(var(--r)) at 0% 50%, #0000 95%, #000) bottom/100% calc(100% - var(--r)) no-repeat,
+    radial-gradient(var(--r) at left 50% top var(--r), #000 95%, #0000);
 }
