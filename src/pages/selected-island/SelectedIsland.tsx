@@ -1,6 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 import "./PuzzlesIsland.css";
-import { JigsawPuzzle } from './jigsaw-puzzle/jigsaw-puzzle.tsx';
+import { JigsawPuzzle } from '../../components/jigsaw-puzzle/jigsaw-puzzle.tsx';
 
 const PuzzlesIsland = () => {
   return (
