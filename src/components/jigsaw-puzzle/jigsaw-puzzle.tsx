@@ -160,6 +160,42 @@ export const JigsawPuzzle: FC<JigsawPuzzleProps> = ({
     }
   }, [draggingTile, setTiles, rootSize, onSolved]);
 
+  const getPiecePosition = useCallback((position: number) => {
+    if(position === 0) {
+      return "corner-top-left";
+    }
+
+    if(position === (columns - 1)) {
+      return "corner-top-right";
+    }
+
+    if(position === ((columns * rows) - columns)) {
+      return "corner-bottom-left";
+    }
+
+    if(position === ((columns * rows) - 1)) {
+      return "corner-bottom-right";
+    }
+
+    if(position % columns === 0) {
+      return "border-left";
+    }
+
+    if(position % columns === (rows - 1)) {
+      return "border-right";
+    }
+
+    if(position < columns) {
+      return "border-top";
+    }
+
+    if(position > ((rows - 1) * columns)) {
+      return "border-bottom";
+    }
+
+    return "center";
+  }, [rows, columns]);
+
   return <div
     ref={onRootElementRendered}
     onTouchMove={onRootMouseMove}
@@ -180,18 +216,19 @@ export const JigsawPuzzle: FC<JigsawPuzzleProps> = ({
     }}
   >
     {tiles && rootSize && imageSize && tiles.map(tile => {
-      const circleSize = 5;
       const height = `${1 / rows * 100}%`;
-      const width = `${1 / columns * 100}%`
+      const width = `${1 / columns * 100}%`;
+      const pieceClass = `jigsaw-puzzle__${getPiecePosition(tile.correctPosition)}`;
+
       return (
         <div
           draggable={false}
           onMouseDown={event => onTileMouseDown(tile, event)}
           onTouchStart={event => onTileMouseDown(tile, event)}
           key={tile.id}
-          className={`jigsaw-puzzle__piece ${tile.solved ? ' jigsaw-puzzle__piece--solved' : ''} `}
+          className={`jigsaw-puzzle__piece ${pieceClass} ${tile.solved ? ' jigsaw-puzzle__piece--solved' : ''} `}
           style={{
-            '--r': `${circleSize}vw`,
+            '--r': `calc(2vw * 3)`,
             position: 'absolute',
             height,
             width,
