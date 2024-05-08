@@ -180,7 +180,7 @@ export const JigsawPuzzle: FC<JigsawPuzzleProps> = ({
     }}
   >
     {tiles && rootSize && imageSize && tiles.map(tile => {
-      const circleSize = 42; //TODO: Calculate according to windows size
+      const circleSize = 5;
       const height = `${1 / rows * 100}%`;
       const width = `${1 / columns * 100}%`
       return (
@@ -189,9 +189,9 @@ export const JigsawPuzzle: FC<JigsawPuzzleProps> = ({
           onMouseDown={event => onTileMouseDown(tile, event)}
           onTouchStart={event => onTileMouseDown(tile, event)}
           key={tile.id}
-          className={`jigsaw-puzzle__piece ${tile.solved ? ' jigsaw-puzzle__piece--solved' : ''} jigsaw-puzzle__piece-${tile.correctPosition} `}
+          className={`jigsaw-puzzle__piece ${tile.solved ? ' jigsaw-puzzle__piece--solved' : ''} `}
           style={{
-            '--r': `${circleSize}px`,
+            '--r': `${circleSize}vw`,
             position: 'absolute',
             height,
             width,
