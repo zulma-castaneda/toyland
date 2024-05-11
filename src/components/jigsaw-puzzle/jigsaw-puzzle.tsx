@@ -41,6 +41,7 @@ export const JigsawPuzzle: FC<JigsawPuzzleProps> = ({
   const [imageSize, setImageSize] = useState<{ width: number, height: number }>();
   const [rootSize, setRootSize] = useState<{ width: number, height: number }>();
   const [calculatedHeight, setCalculatedHeight] = useState<number>();
+  const [calculatedWidth, setCalculatedWidth] = useState<number>();
   const rootElement = useRef<HTMLElement>();
   const resizeObserver = useRef<ResizeObserver>();
   const draggingTile = useRef<{
@@ -50,6 +51,7 @@ export const JigsawPuzzle: FC<JigsawPuzzleProps> = ({
     setImageSize({width: image.width, height: image.height});
     if (rootSize) {
       setCalculatedHeight(rootSize!.width / image.width * image.height);
+      setCalculatedWidth(rootSize!.height / image.width * image.height);
     }
     setTiles(Array.from(Array(rows * columns).keys())
       .map(position => ({
@@ -71,6 +73,7 @@ export const JigsawPuzzle: FC<JigsawPuzzleProps> = ({
       });
       if (imageSize) {
         setCalculatedHeight(contentRect.width / imageSize!.width * imageSize!.height);
+        setCalculatedWidth(contentRect.height / imageSize!.width * imageSize!.height);
       }
     }
   }, [setRootSize, imageSize]);
@@ -86,6 +89,7 @@ export const JigsawPuzzle: FC<JigsawPuzzleProps> = ({
       });
       if (imageSize) {
         setCalculatedHeight(element.offsetWidth / imageSize.width * imageSize.height);
+        setCalculatedWidth(element.offsetHeight / imageSize.width * imageSize.height);
       }
     }
   }, [setRootSize, imageSize, rootElement, resizeObserver]);
@@ -212,7 +216,9 @@ export const JigsawPuzzle: FC<JigsawPuzzleProps> = ({
     }}
   >
     {tiles && rootSize && imageSize && tiles.map(tile => {
-      const notchSize = 42;
+      const maxNotchWidth = calculatedWidth! / columns / 5;
+      const maxNotchHeight = calculatedHeight! / rows / 5;
+      const notchSize = maxNotchWidth > maxNotchHeight ? maxNotchHeight : maxNotchWidth;
       const height = `calc(${Math.ceil(1 / rows * 100)}% + (${Math.ceil(notchSize / (rows - 1))}px))`;
       const width = `calc(${Math.ceil(1 / columns * 100)}% + (${Math.ceil(notchSize / (columns - 1))}px))`;
       const pieceClass = `jigsaw-puzzle__${getPiecePosition(tile.correctPosition)}`;
