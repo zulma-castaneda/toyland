@@ -1,4 +1,4 @@
-import React, { CSSProperties, FC, useCallback, useEffect, useRef, useState } from "react";
+import React, { CSSProperties, FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 const clamp = (value: number, min: number, max: number) => {
   if (value < min) {
@@ -131,6 +131,13 @@ export const JigsawPuzzle: FC<JigsawPuzzleProps> = ({
       draggingTile.current!.elem.style.setProperty('top', `${draggedToRelativeToRoot.y}px`);
     }
   }, [draggingTile, rootSize]);
+
+  const notchSize = useMemo(() => {
+    const maxNotchWidth = calculatedWidth! / columns / 5;
+    const maxNotchHeight = calculatedHeight! / rows / 5;
+    return  maxNotchWidth > maxNotchHeight ? maxNotchHeight : maxNotchWidth;
+  }, [calculatedHeight, calculatedWidth, columns, rows]);
+
   const onRootMouseUp = useCallback(() => {
     if (draggingTile.current) {
       draggingTile.current?.elem.classList.remove('jigsaw-puzzle__piece--dragging');
@@ -143,12 +150,14 @@ export const JigsawPuzzle: FC<JigsawPuzzleProps> = ({
         x: draggedTile.correctPosition % columns / columns, y: Math.floor(draggedTile.correctPosition / columns) / rows,
       };
       const isSolved = Math.abs(targetPositionPercentage.x - draggedToPercentage.x) <= solveTolerancePercentage && Math.abs(targetPositionPercentage.y - draggedToPercentage.y) <= solveTolerancePercentage;
+      const notchCompensationX = ((notchSize/rows) * (draggedTile.correctPosition % rows)) / rootSize!.width;
+      const notchCompensationY = ((notchSize/columns) * (Math.floor(draggedTile.correctPosition / columns))) / rootSize!.height;
 
       setTiles(prevState => {
         const newState = [...prevState!.filter(it => it.correctPosition !== draggedTile.correctPosition), {
           ...draggedTile,
-          currentPosXPerc: !isSolved ? draggedToPercentage.x : targetPositionPercentage.x,
-          currentPosYPerc: !isSolved ? draggedToPercentage.y : targetPositionPercentage.y,
+          currentPosXPerc: !isSolved ? draggedToPercentage.x : (targetPositionPercentage.x - notchCompensationX),
+          currentPosYPerc: !isSolved ? draggedToPercentage.y : (targetPositionPercentage.y - notchCompensationY),
           solved: isSolved,
         }];
         if (newState.every(tile => tile.solved)) {
@@ -216,9 +225,6 @@ export const JigsawPuzzle: FC<JigsawPuzzleProps> = ({
     }}
   >
     {tiles && rootSize && imageSize && tiles.map(tile => {
-      const maxNotchWidth = calculatedWidth! / columns / 5;
-      const maxNotchHeight = calculatedHeight! / rows / 5;
-      const notchSize = maxNotchWidth > maxNotchHeight ? maxNotchHeight : maxNotchWidth;
       const height = `calc(${Math.ceil(1 / rows * 100)}% + (${Math.ceil(notchSize / (rows - 1))}px))`;
       const width = `calc(${Math.ceil(1 / columns * 100)}% + (${Math.ceil(notchSize / (columns - 1))}px))`;
       const pieceClass = `jigsaw-puzzle__${getPiecePosition(tile.correctPosition)}`;
@@ -239,8 +245,8 @@ export const JigsawPuzzle: FC<JigsawPuzzleProps> = ({
             backgroundSize: `${rootSize.width}px ${rootSize.height}px`,
             backgroundPositionX: `${tile.correctPosition % columns / (columns - 1) * 100}%`,
             backgroundPositionY: `${Math.floor(tile.correctPosition / columns) / (rows - 1) * 100}%`,
-            left: `${(tile.currentPosXPerc * rootSize.width) - ((notchSize/rows) * (tile.correctPosition % rows))}px`,
-            top: `${(tile.currentPosYPerc * rootSize.height) - ((notchSize/columns) * (Math.floor(tile.correctPosition / columns)))}px`,
+            left: `${(tile.currentPosXPerc * rootSize.width)}px`,
+            top: `${(tile.currentPosYPerc * rootSize.height)}px`,
             touchAction: tile.solved ? 'unset' : 'none',
           } as CSSProperties}
         />
