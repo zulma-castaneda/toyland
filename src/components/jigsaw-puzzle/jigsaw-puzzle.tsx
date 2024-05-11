@@ -205,7 +205,7 @@ export const JigsawPuzzle: FC<JigsawPuzzleProps> = ({
     onTouchCancel={onRootMouseUp}
     onMouseLeave={onRootMouseUp}
     className="jigsaw-puzzle"
-    style={{height: !calculatedHeight ? undefined : `${calculatedHeight}px`}}
+    style={{height: !calculatedHeight ? undefined : `${calculatedHeight}px`, border: '1px solid black'}}
     onDragEnter={event => {
       event.stopPropagation()
       event.preventDefault()
@@ -216,8 +216,8 @@ export const JigsawPuzzle: FC<JigsawPuzzleProps> = ({
     }}
   >
     {tiles && rootSize && imageSize && tiles.map(tile => {
-      const height = `${1 / rows * 100}%`;
-      const width = `${1 / columns * 100}%`;
+      const height = `calc(${Math.ceil(1 / rows * 100)}% + (var(--r)/${rows - 1}))`;
+      const width = `calc(${Math.ceil(1 / columns * 100)}% + (var(--r)/${columns - 1}))`;
       const pieceClass = `jigsaw-puzzle__${getPiecePosition(tile.correctPosition)}`;
 
       return (
@@ -228,7 +228,7 @@ export const JigsawPuzzle: FC<JigsawPuzzleProps> = ({
           key={tile.id}
           className={`jigsaw-puzzle__piece ${pieceClass} ${tile.solved ? ' jigsaw-puzzle__piece--solved' : ''} `}
           style={{
-            '--r': `calc(2vw * 3)`,
+            '--r': `42px`,
             position: 'absolute',
             height,
             width,
