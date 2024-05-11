@@ -44,7 +44,7 @@
 
 .jigsaw-puzzle .jigsaw-puzzle__corner-bottom-left {
     --_m: radial-gradient(var(--r) at 100% calc(50% - var(--r)),#0000 98%,#000) 0 var(--r) no-repeat,
-    radial-gradient(var(--r) at 50% 0,#0000 98%,#000) 0 0/ 100% var(--r) no-repeat;
+    radial-gradient(var(--r) at 50% 0,#0000 98%,#000) 0 1px/ 100% var(--r) no-repeat
 }
 
 .jigsaw-puzzle .jigsaw-puzzle__corner-bottom-right {
@@ -60,12 +60,12 @@
 
 .jigsaw-puzzle .jigsaw-puzzle__border-bottom {
     --_m: radial-gradient(var(--r) at calc(50% - var(--r) / 2) 0, #0000 98%, #000) var(--r) 0/100% var(--r) no-repeat,
-    radial-gradient(var(--r) at calc(100% - var(--r)) calc(50% - var(--r) / 2), #0000 98%, #000) var(--r) 100%/100% calc(100% - var(--r)) no-repeat,
+    radial-gradient(var(--r) at calc(100% - var(--r)) calc(50% - var(--r) / 2), #0000 98%, #000) var(--r) 100%/100% calc(101% - var(--r)) no-repeat,
     radial-gradient(var(--r) at var(--r) 50%, #000 98%, #0000);
 }
 
 .jigsaw-puzzle .jigsaw-puzzle__border-left {
-    --_m: radial-gradient(var(--r) at 100% calc(50% - var(--r) / 2), #0000 98%, #000) 50%/ 100% calc(100% - 2 * var(--r)) no-repeat,
+    --_m: radial-gradient(var(--r) at 100% calc(50% - var(--r) / 2), #0000 98%, #000) 50%/ 100% calc(101% - 2 * var(--r)) no-repeat,
     radial-gradient(var(--r) at 50% 0, #0000 98%, #000) 0 0/ 100% var(--r) no-repeat,
     radial-gradient(var(--r) at 50% calc(100% - var(--r)), #000 98%, #0000);
 }
@@ -78,7 +78,7 @@
 
 .jigsaw-puzzle .jigsaw-puzzle__center {
     --_m: radial-gradient(var(--r) at calc(50% - var(--r) / 2) 0, #0000 98%, #000) var(--r) 0 / 100% var(--r) no-repeat,
-    radial-gradient(var(--r) at calc(100% - var(--r)) calc(50% - var(--r) / 2), #0000 98%, #000) var(--r) 50% / 100% calc(100% - 2 * var(--r)) no-repeat,
+    radial-gradient(var(--r) at calc(100% - var(--r)) calc(50% - var(--r) / 2), #0000 98%, #000) var(--r) 50% / 100% calc(101% - 2 * var(--r)) no-repeat,
     radial-gradient(var(--r) at var(--r) calc(50% - var(--r) / 2), #000 98%, #0000),
     radial-gradient(var(--r) at calc(50% + var(--r) / 2) calc(100% - var(--r)), #000 98%, #0000);
 }
