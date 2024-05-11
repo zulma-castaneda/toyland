@@ -14,8 +14,6 @@ const solveTolerancePercentage = 0.09;
 
 interface Tile {
   id: number;
-  tileOffsetX: number
-  tileOffsetY: number,
   tileWidth: number,
   tileHeight: number,
   correctPosition: number,
@@ -59,8 +57,6 @@ export const JigsawPuzzle: FC<JigsawPuzzleProps> = ({
         correctPosition: position,
         tileHeight: image.height / rows,
         tileWidth: image.width / columns,
-        tileOffsetX: (position % columns) * (image.width / columns),
-        tileOffsetY: Math.floor(position / columns) * (image.height / rows),
         currentPosXPerc: Math.random() * (1 - 1 / rows),
         currentPosYPerc: Math.random() * (1 - 1 / columns),
         solved: false
@@ -216,8 +212,9 @@ export const JigsawPuzzle: FC<JigsawPuzzleProps> = ({
     }}
   >
     {tiles && rootSize && imageSize && tiles.map(tile => {
-      const height = `calc(${Math.ceil(1 / rows * 100)}% + (var(--r)/${rows - 1}))`;
-      const width = `calc(${Math.ceil(1 / columns * 100)}% + (var(--r)/${columns - 1}))`;
+      const notchSize = 42;
+      const height = `calc(${Math.ceil(1 / rows * 100)}% + (${Math.ceil(notchSize / (rows - 1))}px))`;
+      const width = `calc(${Math.ceil(1 / columns * 100)}% + (${Math.ceil(notchSize / (columns - 1))}px))`;
       const pieceClass = `jigsaw-puzzle__${getPiecePosition(tile.correctPosition)}`;
 
       return (
@@ -228,7 +225,7 @@ export const JigsawPuzzle: FC<JigsawPuzzleProps> = ({
           key={tile.id}
           className={`jigsaw-puzzle__piece ${pieceClass} ${tile.solved ? ' jigsaw-puzzle__piece--solved' : ''} `}
           style={{
-            '--r': `42px`,
+            '--r': `${notchSize}px`,
             position: 'absolute',
             height,
             width,
@@ -236,8 +233,8 @@ export const JigsawPuzzle: FC<JigsawPuzzleProps> = ({
             backgroundSize: `${rootSize.width}px ${rootSize.height}px`,
             backgroundPositionX: `${tile.correctPosition % columns / (columns - 1) * 100}%`,
             backgroundPositionY: `${Math.floor(tile.correctPosition / columns) / (rows - 1) * 100}%`,
-            left: `${tile.currentPosXPerc * rootSize.width}px`,
-            top: `${tile.currentPosYPerc * rootSize.height}px`,
+            left: `${(tile.currentPosXPerc * rootSize.width) - ((notchSize/rows) * (tile.correctPosition % rows))}px`,
+            top: `${(tile.currentPosYPerc * rootSize.height) - ((notchSize/columns) * (Math.floor(tile.correctPosition / columns)))}px`,
             touchAction: tile.solved ? 'unset' : 'none',
           } as CSSProperties}
         />
