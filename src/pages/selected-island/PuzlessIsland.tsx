@@ -108,7 +108,7 @@ export const PuzzlesIsland = () => {
         </label>
         <div className="puzzle-container">
           <JigsawPuzzle
-            imageSrc="../../victorian-puzzle.jpg"
+            imageSrc="/victorian-puzzle.jpg"
             rows={pieceCount}
             columns={pieceCount}
             onSolved={() => setIsJigsaePuzzleSolved(true)}
