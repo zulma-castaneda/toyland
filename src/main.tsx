@@ -32,7 +32,7 @@ const router = createBrowserRouter([
       },
     ],
   },
-]);
+], { basename: '/toyland' });
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
