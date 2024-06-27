@@ -1,6 +1,8 @@
 import { DollBuilder } from "../../components/DollBuilder/DollBuilder.tsx";
 import { ColorfulText } from "../introduction/ColorfulText.tsx";
 
+import { DollBuilder } from '../../components/DollBuilder/DollBuilder.tsx';
+
 export const DollsIsland = () => {
   return (
     <div className="puzzles-island ">
@@ -73,6 +75,7 @@ export const DollsIsland = () => {
           </div>
         </section>
       </div>
+      <DollBuilder/>
     </div>
   );
 };
