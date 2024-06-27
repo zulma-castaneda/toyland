@@ -26,6 +26,7 @@ export function Slider(
     let touchstartX = 0;
     let touchendX = 0;
     let slideWidth = 0;
+    let slideHeigh = 0;
     let wrapWidth = 0;
     const numSlides = slides.length;
     const proxy = document.createElement('div');
@@ -36,7 +37,6 @@ export function Slider(
     const wrapX = gsap.utils.wrap(-100, (numSlides - 1) * 100);
 
     gsap.set(slideElements, {
-      backgroundColor: 'random([red, blue, green, purple, orange, yellow, lime, pink])',
       xPercent: i => i * 100
     });
 
@@ -84,10 +84,15 @@ export function Slider(
       const norm = (+gsap.getProperty(proxy, 'x') / wrapWidth) || 0;
 
       slideWidth = slidesRefs.current[0].current?.offsetWidth ?? 0;
+      slideHeigh = slidesRefs.current[0].current?.offsetHeight ?? 0;
       wrapWidth = slideWidth * numSlides;
 
       gsap.set(proxy, {
         x: norm * wrapWidth
+      });
+
+      gsap.set(containerRef.current, {
+        height: slideHeigh,
       });
 
       contextSafe!(() => animateSlides(0))();

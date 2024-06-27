@@ -2,11 +2,13 @@ import './DollBuilder.css';
 import { Slider } from '../Slider/Slider.tsx';
 
 export function DollBuilder() {
-  const slides = [1,2,3,4,5,6,7,8,9,10].map(num => (<div>{num}</div>));
+  const heads = [1,2,3,4,5,6].map(num => (<div className={'sprite sprite-' + num}></div>));
+  const body = [1,2,3].map(num => (<div className={'sprite sprite-p' + num}></div>));
 
   return (
     <div className='doll-builder-container'>
-      <Slider slides={slides}/>
+      <Slider slides={heads}/>
+      <Slider slides={body}/>
     </div>
   );
 }
