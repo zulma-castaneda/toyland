@@ -1,3 +1,5 @@
+import { DollBuilder } from '../../components/DollBuilder/DollBuilder.tsx';
+
 export const DollsIsland = () => {
   return (
     <>
@@ -50,6 +52,7 @@ export const DollsIsland = () => {
         src="https://assets-global.website-files.com/63c0e15b6f20f4ddc82201e0/65d3c8bffd4d0f2160206679_Ep3_1.14.1.webp"
         alt=""
       />
+      <DollBuilder/>
     </>
   );
 };
