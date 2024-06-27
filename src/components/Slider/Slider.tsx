@@ -23,6 +23,8 @@ export function Slider(
   const nextButtonRef = useRef<HTMLButtonElement | null>(null);
 
   useGSAP((_, contextSafe) => {
+    let touchstartX = 0;
+    let touchendX = 0;
     let slideWidth = 0;
     let wrapWidth = 0;
     const numSlides = slides.length;
@@ -69,7 +71,16 @@ export function Slider(
       });
     }
 
-    function resize() {
+    function checkSwipeDirection() {
+      if (touchendX < touchstartX) {
+        contextSafe!(() => animateSlides(-1))();
+      }
+      if (touchendX > touchstartX) {
+        contextSafe!(() => animateSlides(1))();
+      }
+    }
+
+    function onResize() {
       const norm = (+gsap.getProperty(proxy, 'x') / wrapWidth) || 0;
 
       slideWidth = slidesRefs.current[0].current?.offsetWidth ?? 0;
@@ -91,8 +102,17 @@ export function Slider(
       contextSafe!(() => animateSlides(-1))();
     });
 
-    window.onresize = contextSafe!(resize);
-    contextSafe!(resize)();
+    containerRef.current?.addEventListener('touchstart', e => {
+      touchstartX = e.changedTouches[0].screenX;
+    });
+
+    containerRef.current?.addEventListener('touchend', e => {
+      touchendX = e.changedTouches[0].screenX;
+      checkSwipeDirection();
+    });
+
+    window.onresize = contextSafe!(onResize);
+    contextSafe!(onResize)();
   }, { scope: containerRef });
 
   return (
