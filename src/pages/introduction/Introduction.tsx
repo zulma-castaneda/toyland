@@ -11,27 +11,31 @@ export function Introduction() {
             Una enciclopedia interactiva sobre juguetes
           </h2>
         </div>
-        <p>
-          En la decada del 2000, mi primer computador se convirtio en una
-          ventana hacia un universo de conocimientos, gracias al emblemático
-          software educativo de Encarta y las aventuras de Z multimedia. Las
-          horas que pasé explorando estos programas, moldearon mi carrera y
-          despertaron en mí una curiosidad que ahora me motiva a crear.
-        </p>
-        <p>
-          Hoy, con Juguetelandia, quiero compartir un tributo a la pasión por el
-          descubrimiento. No es solo un proyecto, es una invitación a explorar y
-          aprender sobre los juguetes que marcaron generaciones.
-        </p>
-        <p>
-          Mi deseo es que la tecnología sirva para enriquecer nuestro
-          conocimiento, no para eclipsarlo. En tiempos donde el pensamiento
-          crítico escasea y el entretenimiento superficial abunda, Juguetelandia
-          es un espacio de inspiración y curiosidad. Porque si algo nos hace
-          falta hoy en día, es más contenido que nos motive a buscar y aprender.
-          Y si no lo encuentro, ¿por qué no crearlo yo misma?
-        </p>
-        <h2 className="chewy-regular">Descubre las Islas de Juguetelandia</h2>
+        {/* <div>
+          <p>
+            En la decada del 2000, mi primer computador se convirtio en una
+            ventana hacia un universo de conocimientos, gracias al emblemático
+            software educativo de Encarta y las aventuras de Z multimedia. Las
+            horas que pasé explorando estos programas, moldearon mi carrera y
+            despertaron en mí una curiosidad que ahora me motiva a crear.
+          </p>
+          <p>
+            Hoy, con Juguetelandia, quiero compartir un tributo a la pasión por
+            el descubrimiento. No es solo un proyecto, es una invitación a
+            explorar y aprender sobre los juguetes que marcaron generaciones.
+          </p>
+          <p>
+            Mi deseo es que la tecnología sirva para enriquecer nuestro
+            conocimiento, no para eclipsarlo. En tiempos donde el pensamiento
+            crítico escasea y el entretenimiento superficial abunda,
+            Juguetelandia es un espacio de inspiración y curiosidad. Porque si
+            algo nos hace falta hoy en día, es más contenido que nos motive a
+            buscar y aprender. Y si no lo encuentro, ¿por qué no crearlo yo
+            misma?
+          </p>
+        </div> */}
+
+        {/* <h2 className="chewy-regular">Descubre las Islas de Juguetelandia</h2> */}
         <p>
           Embárcate en un viaje por el archipiélago de Juguetelandia y sumérgete
           en las fascinantes historias que cada isla tiene para compartir
@@ -47,7 +51,7 @@ export function Introduction() {
             algunos desafíos!
           </li>
           <div className="intro--img">
-            <img src={"dolls-island.png"} />
+            <img src={"puzzle-island.png"} />
           </div>
           <br />
           <li>
@@ -68,13 +72,10 @@ export function Introduction() {
               Desliza hacia arriba y observa cómo el barco comienza a moverse.
             </li>
             <li>
-              Cuando te acerques a una isla, verás que el barco empieza a
-              saltar.
+              Cuando te acerques a una isla, tocala para interactuar con ella y
+              comenzar su actividad.
             </li>
-            <li>
-              Toca el barco para interactuar con la isla y comenzar con su
-              actividad
-            </li>
+            <li>Para volver a navegar regresa a la página anterior</li>
           </ol>
         </p>
         <ScrollIndicator />

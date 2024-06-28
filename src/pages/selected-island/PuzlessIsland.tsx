@@ -4,14 +4,8 @@ import puzzleImage from "../../../public/victorian-puzzle.jpg"
 
 export const PuzzlesIsland = () => {
   const [pieceCount, setpieceCount] = useState(3);
-  const [isChecked, setIsChecked] = useState<boolean>(false);
   const [isJigsaePuzzleSolved, setIsJigsaePuzzleSolved] =
     useState<boolean>(false);
-
-  const toggleSwitch = () => {
-    const newValue = !isChecked;
-    setIsChecked(newValue);
-  };
 
   const handleDificultyChange = (e: ChangeEvent<HTMLInputElement>) => {
     setpieceCount(parseInt(e.target.value));
@@ -23,7 +17,7 @@ export const PuzzlesIsland = () => {
         <h2 className="header header-title">
           Bienvenidos a la Isla de los Rompecabezas
         </h2>
-        <div className="two-col-container">
+        <section className="two-col-container">
           <div className="img-two-col">
             <figure>
               <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Spilsbury_jigsaw_-_John_Spilsbury%2C_1766_-_BL.jpg"></img>
@@ -51,9 +45,48 @@ export const PuzzlesIsland = () => {
               un rompecabezas y aprender sobre diferentes lugares del mundo. 🗺️
             </p>
           </div>
-        </div>
+        </section>
         <hr />
-        <div className="two-col-container">
+        <section>
+          <h3 className="header">
+            ¿Te animas a armar uno ahora? ¡Seguro que te divertirás! 🌟🧩
+          </h3>
+          <p>
+            Las piezas de este rompecabezas encajan perfectamente en su lugar y
+            no se moverán si están en el lugar correcto. Puedes usar el control
+            para hacer el juego más fácil o más difícil. Este rompecabezas es
+            especial porque no tiene los bordes entrelazados que vemos en los
+            rompecabezas de hoy en día. ¡Tiene un estilo clásico victoriano,
+            como los rompecabezas antiguos!
+          </p>
+          <label htmlFor="slider">Fácil</label>
+          <input
+            type="range"
+            min="3"
+            max="10"
+            value={pieceCount}
+            id="slider"
+            onChange={handleDificultyChange}
+          />
+          <label htmlFor="slider">Difícil</label>
+          <p>
+            Cantidad de piezas:{" "}
+            <span id="pieceCount">{pieceCount * pieceCount}</span>
+          </p>
+          <div className="puzzle-container">
+            <JigsawPuzzle
+              imageSrc="../../victorian-puzzle.png"
+              rows={pieceCount}
+              columns={pieceCount}
+              onSolved={() => setIsJigsaePuzzleSolved(true)}
+            />
+          </div>
+          {isJigsaePuzzleSolved && (
+            <h3 className="header">Felicitaciones! lo lograste 🌟🧩</h3>
+          )}
+        </section>
+        <hr />
+        <section className="two-col-container">
           <div className="text-two-col">
             <p>
               En el siglo XX, los rompecabezas se volvieron muy famosos. Eran
@@ -79,46 +112,7 @@ export const PuzzlesIsland = () => {
               </figcaption>
             </figure>
           </div>
-        </div>
-        <h3 className="header">
-          ¿Te animas a armar uno ahora? ¡Seguro que te divertirás! 🌟🧩
-        </h3>
-        <p>
-          Aquí puedes ajustar las piezas del juego para que sea más fácil o más
-          difícil. ¿Quieres desafiar tus habilidades y activar los bordes que se
-          entrelazan como por arte de magia? ¡Adelante! ¿O prefieres resolverlo
-          como lo hacían en tiempos antiguos, como en la época victoriana?
-          ¡También es posible!
-        </p>
-        <label htmlFor="slider">Fácil</label>
-        <input
-          type="range"
-          min="3"
-          max="10"
-          value={pieceCount}
-          id="slider"
-          onChange={handleDificultyChange}
-        />
-        <label htmlFor="slider">Difícil</label>
-        <p>
-          Cantidad de piezas:{" "}
-          <span id="pieceCount">{pieceCount * pieceCount}</span>
-        </p>
-        <label className="switch">
-          <input type="checkbox" checked={isChecked} onChange={toggleSwitch} />
-          Activar bordes
-        </label>
-        <div className="puzzle-container">
-          <JigsawPuzzle
-            imageSrc={puzzleImage}
-            rows={pieceCount}
-            columns={pieceCount}
-            onSolved={() => setIsJigsaePuzzleSolved(true)}
-          />
-        </div>
-        {isJigsaePuzzleSolved && (
-          <h3 className="header">Felicitaciones! lo lograste 🌟🧩</h3>
-        )}
+        </section>
         <hr />
         <div className="two-col-container">
           <div className="img-two-col">
@@ -150,6 +144,14 @@ export const PuzzlesIsland = () => {
           🌟 Así que, la próxima vez que hagas un rompecabezas, recuerda que
           estás siguiendo una tradición de cientos de años ¡Diviértete armando
           las piezas! 🤗🧩
+        </p>
+        <p>
+          Si quieres saber más, puedes entrar a a esta página que tiene una
+          amplia colección de rompecabezas de distintas épocas.
+          <br />
+          <a href="https://www.oldpuzzles.com/history-techniques-styles/jigsaw-puzzles-brief-history">
+            https://www.oldpuzzles.com/history-techniques-styles/jigsaw-puzzles-brief-history
+          </a>
         </p>
         https://www.oldpuzzles.com/history-techniques-styles/jigsaw-puzzles-brief-history
       </div>
