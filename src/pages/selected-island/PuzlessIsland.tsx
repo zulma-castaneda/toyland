@@ -1,6 +1,5 @@
 import { ChangeEvent, useState } from "react";
 import { JigsawPuzzle } from "./jigsaw-puzzle/jigsaw-puzzle";
-import puzzleImage from "../../../public/victorian-puzzle.jpg"
 
 export const PuzzlesIsland = () => {
   const [pieceCount, setpieceCount] = useState(3);
