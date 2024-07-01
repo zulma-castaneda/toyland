@@ -1,5 +1,7 @@
 import { ChangeEvent, useState } from "react";
 import { JigsawPuzzle } from "./jigsaw-puzzle/jigsaw-puzzle";
+import puzzleImage from "../../../public/victorian-puzzle.png";
+
 export const PuzzlesIsland = () => {
   const [pieceCount, setpieceCount] = useState(3);
   const [isJigsaePuzzleSolved, setIsJigsaePuzzleSolved] =
@@ -73,7 +75,7 @@ export const PuzzlesIsland = () => {
           </p>
           <div className="puzzle-container">
             <JigsawPuzzle
-              imageSrc="../../victorian-puzzle.png"
+              imageSrc={puzzleImage}
               rows={pieceCount}
               columns={pieceCount}
               onSolved={() => setIsJigsaePuzzleSolved(true)}
