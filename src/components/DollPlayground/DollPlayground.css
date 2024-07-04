@@ -1,0 +1,19 @@
+.playground-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.playground-scene {
+    width: 100%;
+    height: 100%;
+}
+
+.doll {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-color: white;
+    border: 3px solid black;
+    font-size: 10px;
+    pointer-events: none;
+}

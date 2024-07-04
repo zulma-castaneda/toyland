@@ -1,19 +1,20 @@
 import { useEffect, useRef } from 'react';
 import {
   Bodies,
-  Body,
   Composite,
-  Composites,
-  Constraint, Engine, Events, IMouseEvent,
+  Engine,
+  Events,
   Mouse,
   MouseConstraint,
   Render,
   Runner,
-  Vector,
 } from 'matter-js';
+
+import './DollPlayground.css';
 
 export function DollPlayground() {
   const scene = useRef<HTMLDivElement>(null);
+  const doll = useRef<HTMLDivElement>(null);
   const engine = useRef<Engine>(Engine.create());
 
   useEffect(() => {
@@ -27,6 +28,8 @@ export function DollPlayground() {
       options: {
         width: 800,
         height: 600,
+        wireframes: false,
+        background: '#fff'
       }
     });
 
@@ -36,36 +39,11 @@ export function DollPlayground() {
     const runner = Runner.create();
     Runner.run(runner, engine.current);
 
-    // add bodies
-    const group = Body.nextGroup(true);
-
-    const stack = Composites.stack(
-      250,
-      255,
-      1,
-      6,
-      0,
-      0,
-      (x: number, y: number) => {
-        return Bodies.rectangle(x, y, 30, 30);
-      },
-    );
-
-    const catapult = Bodies.rectangle(400, 520, 320, 20, { collisionFilter: { group: group } });
-
     Composite.add(world, [
-      stack,
-      catapult,
-      Bodies.rectangle(400, 600, 800, 50.5, { isStatic: true, render: { fillStyle: '#060a19' } }),
-      Bodies.rectangle(250, 555, 20, 50, { isStatic: true, render: { fillStyle: '#060a19' } }),
-      Bodies.rectangle(400, 535, 20, 80, { isStatic: true, collisionFilter: { group: group }, render: { fillStyle: '#060a19' } }),
-      Bodies.circle(560, 100, 50, { density: 0.005 }),
-      Constraint.create({
-        bodyA: catapult,
-        pointB: Vector.clone(catapult.position),
-        stiffness: 1,
-        length: 0
-      })
+      Bodies.rectangle(400, 600, 800, 20, { isStatic: true }),
+      Bodies.rectangle(400, 0, 800, 20, { isStatic: true }),
+      Bodies.rectangle(0, 300, 20, 600, { isStatic: true }),
+      Bodies.rectangle(800, 300, 20, 600, { isStatic: true }),
     ]);
 
     // add mouse control
@@ -91,36 +69,35 @@ export function DollPlayground() {
       max: { x: 800, y: 600 }
     });
 
-    const onClickWorld = (event: IMouseEvent<MouseConstraint>) => {
-      const {x, y} = event.mouse.position;
-      const ball = Bodies.circle(x, y, 10 + Math.random() * 30, {
-        mass: 10,
-        restitution: 0.9,
-        friction: 0.005,
-        render: {
-          fillStyle: '#0000ff',
-        },
-      });
-      Composite.add(engine.current.world, [ball]);
+    const dollBody = Bodies.rectangle(300, 35, 30, 30);
+    Composite.add(engine.current.world, [dollBody]);
+
+    const onRender = () => {
+      const {x, y} = dollBody.position;
+      doll.current!.style.top = `${y - 20}px`;
+      doll.current!.style.left = `${x - 20}px`;
+      doll.current!.style.transform = `rotate(${dollBody.angle}rad)`;
     }
 
-    Events.on(mouseConstraint, "mouseup", onClickWorld);
-
+    // Events.on(mouseConstraint, "mouseup", onClickWorld);
+    Events.on(render, "afterRender", onRender);
 
     return () => {
       Render.stop(render);
       Runner.stop(runner);
-      Events.off(mouseConstraint, "mouseup", onClickWorld);
+      Events.off(render, "afterRender", onRender);
 
       Render.stop(render)
       Composite.clear(engine.current.world, false, true)
       Engine.clear(engine.current);
       render.canvas.remove();
-      render.textures = {};
     }
   }, []);
 
   return (
-    <div ref={scene} style={{width: '100%', height: '100%'}}/>
+    <div className='playground-container'>
+      <div className='doll' ref={doll}>TEST</div>
+      <div className='playground-scene' ref={scene}/>
+    </div>
   );
 }
