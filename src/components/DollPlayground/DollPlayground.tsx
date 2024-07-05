@@ -40,11 +40,16 @@ export function DollPlayground() {
     const runner = Runner.create();
     Runner.run(runner, engine.current);
 
+    // create walls
+
+    const offset = 10;
+    const options = { isStatic: true };
+
     Composite.add(world, [
-      Bodies.rectangle(400, 600, 800, 20, { isStatic: true }),
-      Bodies.rectangle(400, 0, 800, 20, { isStatic: true }),
-      Bodies.rectangle(0, 300, 20, 600, { isStatic: true }),
-      Bodies.rectangle(800, 300, 20, 600, { isStatic: true }),
+      Bodies.rectangle(400, -offset, 800.5 + 2 * offset, 50.5, options),
+      Bodies.rectangle(400, 600 + offset, 800.5 + 2 * offset, 50.5, options),
+      Bodies.rectangle(800 + offset, 300, 50.5, 600.5 + 2 * offset, options),
+      Bodies.rectangle(-offset, 300, 50.5, 600.5 + 2 * offset, options)
     ]);
 
     // add mouse control
@@ -70,13 +75,19 @@ export function DollPlayground() {
       max: { x: 800, y: 600 }
     });
 
-    const dollBody = Bodies.rectangle(300, 35, 30, 30, { render: { visible: false }});
+    const dollBody = Bodies.rectangle(300, 35, 100, 100, {
+      density: 0.0005,
+      frictionAir: 0.06,
+      restitution: 0.3,
+      friction: 0.01,
+      render: { visible: false }
+    });
     Composite.add(engine.current.world, [dollBody]);
 
     const onRender = () => {
       const {x, y} = dollBody.position;
-      doll.current!.style.top = `${y - 15}px`;
-      doll.current!.style.left = `${x - 15}px`;
+      doll.current!.style.top = `${y - 50}px`;
+      doll.current!.style.left = `${x - 50}px`;
       doll.current!.style.transform = `rotate(${dollBody.angle}rad)`;
     }
 
