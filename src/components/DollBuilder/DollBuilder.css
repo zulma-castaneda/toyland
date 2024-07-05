@@ -1,65 +1,45 @@
 .doll-builder-container {
-
 }
 
 /* Generated using CSS Sprite GeneratorFrom Dan's Tools: https://spritegen.website-performance.org/*/
-
 .sprite {
-    background-image: url(sprites.png);
-    background-repeat: no-repeat;
-    display: block;
+  background-image: url(../../../public/sprites.png);
+  background-repeat: no-repeat;
+  display: block;
 }
 
 .sprite-1 {
-    width: 154px;
-    height: 172px;
-    background-position: -5px -5px;
+  width: 840px;
+  height: 805px;
+  background-position: 0 0;
 }
 
 .sprite-2 {
-    width: 154px;
-    height: 172px;
-    background-position: -169px -5px;
+  width: 1066px;
+  height: 883px;
+  background-position: -840px 0;
 }
 
 .sprite-3 {
-    width: 154px;
-    height: 172px;
-    background-position: -333px -5px;
+  width: 788px;
+  height: 897px;
+  background-position: 0 -883px;
 }
 
-.sprite-4 {
-    width: 154px;
-    height: 172px;
-    background-position: -5px -187px;
+.sprite-B1 {
+  width: 889px;
+  height: 1372px;
+  background-position: -788px -883px;
 }
 
-.sprite-5 {
-    width: 154px;
-    height: 172px;
-    background-position: -169px -187px;
+.sprite-B2 {
+  width: 876px;
+  height: 1358px;
+  background-position: -1906px 0;
 }
 
-.sprite-6 {
-    width: 154px;
-    height: 172px;
-    background-position: -333px -187px;
-}
-
-.sprite-p1 {
-    width: 241px;
-    height: 271px;
-    background-position: -497px -5px;
-}
-
-.sprite-p2 {
-    width: 241px;
-    height: 271px;
-    background-position: -497px -286px;
-}
-
-.sprite-p3 {
-    width: 241px;
-    height: 271px;
-    background-position: -5px -567px;
+.sprite-B3 {
+  width: 871px;
+  height: 1431px;
+  background-position: -1677px -1358px;
 }
