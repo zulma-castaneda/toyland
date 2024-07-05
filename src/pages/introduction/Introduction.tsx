@@ -1,23 +1,7 @@
 import "./Introduction.css";
 import { ScrollIndicator } from "../../components/ScrollIndicator/ScrollIndicator";
+import { ColorfulText } from "./ColorfulText";
 
-const ColorfulText = ({ text }) => {
-  return (
-    <div className="colored-text">
-      {text.split("").map((char, index) => (
-        <span
-          key={index}
-          style={{
-            animationDelay: `${index * 0.2}s`, // Delay each letter's animation for a staggered effect
-            whiteSpace: "pre", // Preserve spaces and line breaks
-          }}
-        >
-          {char}
-        </span>
-      ))}
-    </div>
-  );
-};
 export function Introduction() {
   return (
     <div className="intro">
