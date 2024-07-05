@@ -1,12 +1,31 @@
 import "./Introduction.css";
 import { ScrollIndicator } from "../../components/ScrollIndicator/ScrollIndicator";
 
+const ColorfulText = ({ text }) => {
+  return (
+    <div className="colored-text">
+      {text.split("").map((char, index) => (
+        <span
+          key={index}
+          style={{
+            animationDelay: `${index * 0.2}s`, // Delay each letter's animation for a staggered effect
+            whiteSpace: "pre", // Preserve spaces and line breaks
+          }}
+        >
+          {char}
+        </span>
+      ))}
+    </div>
+  );
+};
 export function Introduction() {
   return (
     <div className="intro">
       <div className="container">
         <div className="header">
-          <h1 className="header-title">Juguetelandia</h1>
+          <h1 className="header-title">
+            <ColorfulText text={"Juguetelandia"}></ColorfulText>
+          </h1>
           <h2 className="header--subtitle">
             Una enciclopedia interactiva sobre juguetes
           </h2>
@@ -41,44 +60,57 @@ export function Introduction() {
           en las fascinantes historias que cada isla tiene para compartir
           contigo:
         </p>
-        <ul>
-          <li>
-            <b className="chewy-regular">Isla de los Rompecabezas: </b>
-            Esta isla es un gigantesco rompecabezas en sí misma, donde los
-            caminos están formados por piezas de este entretenido juego. Aprende
-            sobre el origen y la evolución de los rompecabezas a lo largo de los
-            años. ¿Crees tener talento para resolverlos? ¡Ponte a prueba con
-            algunos desafíos!
-          </li>
-          <div className="intro--img">
-            <img src={"puzzle-island.png"} />
-          </div>
-          <br />
-          <li>
-            <b className="chewy-regular">Isla de las Muñecas: </b> Esta isla
-            está habitada por muñecas de todo el mundo. Sumérgete en la historia
-            y el origen de varios tipos de muñecas mientras juegas a crear las
-            tuyas propias.
-          </li>
-          <div className="intro--img">
-            <img src={"dolls-island.png"} />
-          </div>
-        </ul>
 
-        <h2 className="chewy-regular">Interactúa con las Islas</h2>
-        <p>
-          <ol>
-            <li>
-              Desliza hacia arriba y observa cómo el barco comienza a moverse.
-            </li>
-            <li>
-              Cuando te acerques a una isla, tocala para interactuar con ella y
-              comenzar su actividad.
-            </li>
-            <li>Para volver a navegar regresa a la página anterior</li>
-          </ol>
-        </p>
-        <ScrollIndicator />
+        <section className="two-col-container">
+          <div className="text-two-col ">
+            <h3 className="bold-text"> Isla de los Rompecabezas:</h3>
+            <p>
+              Esta isla es un gigantesco rompecabezas en sí misma, donde los
+              caminos están formados por piezas de este entretenido juego.
+              Aprende sobre el origen y la evolución de los rompecabezas a lo
+              largo de los años. ¿Crees tener talento para resolverlos? ¡Ponte a
+              prueba con algunos desafíos!
+            </p>
+          </div>
+          <div className="img-two-col">
+            <figure>
+              <img src={"puzzle-island.png"} />
+            </figure>
+          </div>
+        </section>
+
+        <section className="two-col-container">
+          <div className="text-two-col ">
+            <h3 className="bold-text"> Isla de las Muñecas:</h3>
+            <p>
+              Esta isla está habitada por muñecas de todo el mundo. Sumérgete en
+              la historia y el origen de varios tipos de muñecas mientras juegas
+              a crear las tuyas propias.
+            </p>
+          </div>
+          <div className="img-two-col">
+            <figure>
+              <img src={"dolls-island.png"} />
+            </figure>
+          </div>
+        </section>
+
+        <div className="info-box">
+          <h2 className="chewy-regular bold-text">Interactúa con las Islas</h2>
+          <p>
+            <ol>
+              <li>
+                Desliza hacia arriba y observa cómo el barco comienza a moverse.
+              </li>
+              <li>
+                Cuando te acerques a una isla, tocala para interactuar con ella
+                y comenzar su actividad.
+              </li>
+              <li>Para volver a navegar regresa a la página anterior</li>
+            </ol>
+          </p>
+          <ScrollIndicator />
+        </div>
       </div>
     </div>
   );
