@@ -11,6 +11,7 @@ import {
 } from 'matter-js';
 
 import './DollPlayground.css';
+import '../DollBuilder/DollBuilder.css';
 
 export function DollPlayground() {
   const scene = useRef<HTMLDivElement>(null);
@@ -69,13 +70,13 @@ export function DollPlayground() {
       max: { x: 800, y: 600 }
     });
 
-    const dollBody = Bodies.rectangle(300, 35, 30, 30);
+    const dollBody = Bodies.rectangle(300, 35, 30, 30, { render: { visible: false }});
     Composite.add(engine.current.world, [dollBody]);
 
     const onRender = () => {
       const {x, y} = dollBody.position;
-      doll.current!.style.top = `${y - 20}px`;
-      doll.current!.style.left = `${x - 20}px`;
+      doll.current!.style.top = `${y - 15}px`;
+      doll.current!.style.left = `${x - 15}px`;
       doll.current!.style.transform = `rotate(${dollBody.angle}rad)`;
     }
 
@@ -96,7 +97,7 @@ export function DollPlayground() {
 
   return (
     <div className='playground-container'>
-      <div className='doll' ref={doll}>TEST</div>
+      <div className='doll sprite sprite-1' ref={doll}></div>
       <div className='playground-scene' ref={scene}/>
     </div>
   );
