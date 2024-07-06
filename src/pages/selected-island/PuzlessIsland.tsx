@@ -1,6 +1,7 @@
 import { ChangeEvent, useState } from "react";
 import { JigsawPuzzle } from "./jigsaw-puzzle/jigsaw-puzzle";
 import puzzleImage from "../../../public/victorian-puzzle.png";
+import sliderImage from "../../../public/perrito.jpg";
 import Slider from "./slide-puzzle/slide-puzzle";
 
 export const PuzzlesIsland = () => {
@@ -142,7 +143,7 @@ export const PuzzlesIsland = () => {
           </div>
         </div>
         <div className="slider-container">
-          <Slider />
+          <Slider imageSrc={sliderImage} />
         </div>
         <p>
           🌟 Así que, la próxima vez que hagas un rompecabezas, recuerda que

@@ -90,7 +90,7 @@ class GameState {
     const tilePosition = [...this.board[index]];
 
     // copy the current board and swap the positions
-    let boardAfterMove = [...this.board];
+    const boardAfterMove = [...this.board];
     boardAfterMove[EMPTY_INDEX] = tilePosition;
     boardAfterMove[index] = emptyPosition;
 
@@ -162,12 +162,10 @@ class GameState {
     // Another way to do it is to use GameState.instance instead of self.
     // that will work, because GameState is a singleton class.
 
-    const self = this;
-
     return {
-      board: self.board,
-      moves: self.moves,
-      solved: self.isSolved(),
+      board: this.board,
+      moves: this.moves,
+      solved: this.isSolved(),
     };
   }
 }
@@ -227,22 +225,28 @@ function useGameState() {
 interface TileProps {
   index: number;
   pos: number[];
+  imageSrc: string
   onClick: () => void;
 }
 
-const Tile: React.FC<TileProps> = ({ index, pos, onClick }) => (
-  <div
-    className="tile"
-    style={{
-      transform: `translate3d(${pos[1] * 100}%, ${pos[0] * 100}%, 0)`,
-    }}
-    onClick={onClick}
-  >
-    {index + 1}
-  </div>
-);
+const Tile: React.FC<TileProps> = ({ index, pos, onClick, imageSrc }) => {
+  const top = pos[0]*100 + 5;
+  const left = pos[1]*100 + 5;
+  const bgLeft = (index%4)*100 + 5;
+  const bgTop = Math.floor(index/4)*100 + 5;
 
-const Slider: React.FC = () => {
+  return <div
+    className='tile'
+    onClick={onClick}
+    style={{top, left,backgroundImage: `url(${imageSrc})`, backgroundPosition: `-${bgLeft}px -${bgTop}px`}}
+  />;
+};
+
+interface SliderProps {
+  imageSrc: string;
+}
+
+const Slider: React.FC<SliderProps> = ({imageSrc}) => {
   const [board, moves, solved, newGame, undo, move] = useGameState();
 
   return (
@@ -255,7 +259,7 @@ const Slider: React.FC = () => {
       </div>
       <div className="board">
         {board.slice(0, -1).map((pos, index) => (
-          <Tile key={index} index={index} pos={pos} onClick={move(index)} />
+          <Tile key={index} index={index} pos={pos} onClick={move(index)} imageSrc={imageSrc} />
         ))}
         {solved && (
           <div className="overlay">
