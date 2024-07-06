@@ -1,0 +1,34 @@
+.slides-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+.slides-inner {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.slide {
+    position: absolute;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.prevButton {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+}
+
+.nextButton {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+}

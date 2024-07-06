@@ -1,0 +1,45 @@
+.doll-builder-container {
+}
+
+/* Generated using CSS Sprite GeneratorFrom Dan's Tools: https://spritegen.website-performance.org/*/
+.sprite {
+  background-image: url(../../../public/sprites.png);
+  background-repeat: no-repeat;
+  display: block;
+}
+
+.sprite-1 {
+  width: 210px;
+  height: 201px;
+  background-position: 0 0;
+}
+
+.sprite-2 {
+  width: 244px;
+  height: 202px;
+  background-position: -210px 0;
+}
+
+.sprite-3 {
+  width: 210px;
+  height: 201px;
+  background-position: 0 -202px;
+}
+
+.sprite-B1 {
+  width: 223px;
+  height: 343px;
+  background-position: -210px -202px;
+}
+
+.sprite-B2 {
+  width: 222px;
+  height: 343px;
+  background-position: -454px 0;
+}
+
+.sprite-B3 {
+  width: 209px;
+  height: 343px;
+  background-position: -433px -343px;
+}

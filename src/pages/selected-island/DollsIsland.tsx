@@ -1,3 +1,5 @@
+import { DollBuilder } from "../../components/DollBuilder/DollBuilder.tsx";
+
 export const DollsIsland = () => {
   return (
     <div className="puzzles-island ">
@@ -39,6 +41,8 @@ export const DollsIsland = () => {
           </div>
         </section>
         <hr />
+        <DollBuilder />
+
         <section className="two-col-container">
           <div className="img-two-col">
             <figure>
