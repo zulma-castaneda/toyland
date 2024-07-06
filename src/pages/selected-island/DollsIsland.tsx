@@ -23,6 +23,8 @@ export const DollsIsland = () => {
     });
   };
 
+  const clearHouse = () => {setToys([])};
+
   return (
     <div className="puzzles-island ">
       <div className="container">
@@ -62,6 +64,7 @@ export const DollsIsland = () => {
         <h3 className="bold-text header">Animate a armar tu propia Kokeshi</h3>
         <DollBuilder onHeadUpdate={setHead} onBodyUpdate={setBody}/>
         <button onClick={addDoll}>Agregar muñeca</button>
+        <button onClick={clearHouse}>Limpiar casa</button>
         <DollPlayground toys={toys} />
 
         <section className="two-col-container">

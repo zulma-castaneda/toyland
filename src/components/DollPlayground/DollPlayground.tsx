@@ -148,7 +148,7 @@ export function DollPlayground({ toys }: DollPlaygroundProps) {
       Runner.stop(runner);
       Events.off(render, "afterRender", onRender);
 
-      Composite.clear(engine.current.world, false, true)
+      Composite.clear(world, false, true)
       Engine.clear(engine.current);
       render.canvas.remove();
 
@@ -177,6 +177,14 @@ export function DollPlayground({ toys }: DollPlaygroundProps) {
       toyStored.body = dollBody;
       toysStorage.current.set(toy.id, toyStored);
     });
+
+    for (const [id, storedToy] of toysStorage.current) {
+      const foundToy = toys.find(toy => toy.id === id);
+
+      if(!foundToy && storedToy.body) {
+        Composite.remove(engine.current.world, storedToy.body);
+      }
+    }
   }, [toys, sceneWidth]);
 
   return (
