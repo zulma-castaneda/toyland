@@ -1,9 +1,11 @@
-import { useEffect, useRef } from 'react';
+import { createRef, RefObject, useEffect, useRef } from 'react';
 import {
   Bodies,
+  Body,
   Composite,
   Engine,
   Events,
+  IChamferableBodyDefinition,
   Mouse,
   MouseConstraint,
   Render,
@@ -13,17 +15,49 @@ import {
 import './DollPlayground.css';
 import '../DollBuilder/DollBuilder.css';
 
-export function DollPlayground() {
+export interface GenericToy {
+  type: 'generic',
+  variant: string,
+}
+
+export interface Doll {
+  type: 'doll';
+  head: number;
+  body: number;
+}
+
+export type Toy = {
+  id: string;
+} & (Doll | GenericToy);
+
+export interface DollPlaygroundProps {
+  toys: Toy[];
+}
+
+type ToysStorage = {
+  body?: Body,
+  ref: RefObject<HTMLDivElement>,
+};
+
+const dollsScale = 0.5;
+const defaultXPosition = 300;
+const defaultYPosition = 35;
+const defaultBodyOptions: IChamferableBodyDefinition = {
+  density: 0.0005,
+  frictionAir: 0.06,
+  restitution: 0.3,
+  friction: 0.01,
+  render: { visible: false }
+};
+
+export function DollPlayground({ toys }: DollPlaygroundProps) {
   const scene = useRef<HTMLDivElement>(null);
-  const doll = useRef<HTMLDivElement>(null);
   const engine = useRef<Engine>(Engine.create());
-  const dollsScale = 0.3;
+  const toysStorage = useRef<Map<Toy['id'], ToysStorage>>(new Map());
 
   useEffect(() => {
     // create engine
     const world = engine.current.world;
-    const dollWidth = (doll.current?.offsetWidth ?? 0) * dollsScale;
-    const dollHeight = (doll.current?.offsetHeight ?? 0) * dollsScale;
 
     // create renderer
     const render = Render.create({
@@ -78,21 +112,19 @@ export function DollPlayground() {
       max: { x: 800, y: 600 }
     });
 
-    const dollBody = Bodies.rectangle(300, 35, dollWidth, dollHeight, {
-      density: 0.0005,
-      frictionAir: 0.06,
-      restitution: 0.3,
-      friction: 0.01,
-      render: { visible: false }
-    });
-    Composite.add(engine.current.world, [dollBody]);
-
     const onRender = () => {
-      const {x, y} = dollBody.position;
-      doll.current!.style.top = `${y - (dollHeight / 2)}px`;
-      doll.current!.style.left = `${x - (dollWidth / 2)}px`;
-      doll.current!.style.transform = `rotate(${dollBody.angle}rad)`;
-    }
+      for (const { body, ref} of toysStorage.current.values()) {
+        if(!body || !ref.current) { continue; }
+
+        const {x, y} = body.position;
+        const dollWidth = ref.current.offsetWidth * dollsScale;
+        const dollHeight = ref.current.offsetHeight * dollsScale;
+
+        ref.current.style.top = `${y - (dollHeight)}px`;
+        ref.current.style.left = `${x - (dollWidth)}px`;
+        ref.current.style.transform = `rotate(${body.angle}rad)`;
+      }
+    };
 
     Events.on(render, "afterRender", onRender);
 
@@ -107,12 +139,52 @@ export function DollPlayground() {
     }
   }, []);
 
+  useEffect(() => {
+    toys.forEach(toy => {
+      const toyStored = toysStorage.current.get(toy.id);
+      const toyRef = toyStored?.ref.current;
+      const toyBody = toyStored?.body;
+      if(!toyStored || !toyRef || toyBody) { return; }
+
+      const dollWidth = toyRef.offsetWidth * dollsScale;
+      const dollHeight = toyRef.offsetHeight * dollsScale;
+
+      const dollBody = Bodies.rectangle(defaultXPosition, defaultYPosition, dollWidth, dollHeight, defaultBodyOptions);
+
+      Composite.add(engine.current.world, [dollBody]);
+      toyStored.body = dollBody;
+      toysStorage.current.set(toy.id, toyStored);
+    });
+  }, [toys]);
+
   return (
     <div className='playground-container'>
-      <div className='doll' style={{scale: String(dollsScale)}} ref={doll}>
-        <div className='sprite sprite-1'/>
-        <div className='sprite sprite-p1'/>
-      </div>
+      {
+        toys.map(toy => {
+          let storedToy = toysStorage.current.get(toy.id);
+
+          if(!storedToy) {
+            storedToy = { ref: createRef() };
+            toysStorage.current.set(toy.id, storedToy);
+          }
+
+          switch (toy.type) {
+            case 'doll':
+              return (
+                <div className='doll' key={toy.id} style={{scale: String(dollsScale)}} ref={storedToy.ref}>
+                  <div className={`sprite sprite-${toy.head}`}/>
+                  <div className={`sprite sprite-p${toy.body}`}/>
+                </div>
+              );
+            case 'generic':
+              return (
+                <div key={toy.id} className='doll' style={{scale: String(dollsScale)}} ref={storedToy.ref}>
+                  <div className={`sprite sprite-${toy.variant}`}/>
+                </div>
+              );
+          }
+        })
+      }
       <div className='playground-scene' ref={scene}/>
     </div>
   );
