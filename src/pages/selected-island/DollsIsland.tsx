@@ -2,6 +2,7 @@ import { DollBuilder } from "../../components/DollBuilder/DollBuilder.tsx";
 import { ColorfulText } from "../introduction/ColorfulText.tsx";
 import { DollPlayground, Toy } from '../../components/DollPlayground/DollPlayground.tsx';
 import { useState } from 'react';
+import { v4 as uuid } from "uuid";
 
 export const DollsIsland = () => {
   const [toys, setToys] = useState<Toy[]>([]);
@@ -11,7 +12,7 @@ export const DollsIsland = () => {
       return [
         ...currentToys,
         {
-          id: self.crypto.randomUUID(),
+          id: uuid(),
           type: 'doll',
           head,
           body,
