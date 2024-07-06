@@ -109,7 +109,10 @@ export function DollPlayground() {
 
   return (
     <div className='playground-container'>
-      <div className='doll sprite sprite-1' style={{scale: String(dollsScale)}} ref={doll}></div>
+      <div className='doll' style={{scale: String(dollsScale)}} ref={doll}>
+        <div className='sprite sprite-1'/>
+        <div className='sprite sprite-p1'/>
+      </div>
       <div className='playground-scene' ref={scene}/>
     </div>
   );
