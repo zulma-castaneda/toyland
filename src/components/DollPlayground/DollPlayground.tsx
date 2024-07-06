@@ -17,7 +17,7 @@ export function DollPlayground() {
   const scene = useRef<HTMLDivElement>(null);
   const doll = useRef<HTMLDivElement>(null);
   const engine = useRef<Engine>(Engine.create());
-  const dollsScale = 0.5;
+  const dollsScale = 0.3;
 
   useEffect(() => {
     // create engine
@@ -89,8 +89,8 @@ export function DollPlayground() {
 
     const onRender = () => {
       const {x, y} = dollBody.position;
-      doll.current!.style.top = `${y - dollHeight}px`;
-      doll.current!.style.left = `${x - dollWidth}px`;
+      doll.current!.style.top = `${y - (dollHeight / 2)}px`;
+      doll.current!.style.left = `${x - (dollWidth / 2)}px`;
       doll.current!.style.transform = `rotate(${dollBody.angle}rad)`;
     }
 
