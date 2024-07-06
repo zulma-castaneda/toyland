@@ -1,9 +1,41 @@
 import { DollBuilder } from "../../components/DollBuilder/DollBuilder.tsx";
 import { ColorfulText } from "../introduction/ColorfulText.tsx";
-
-import { DollBuilder } from '../../components/DollBuilder/DollBuilder.tsx';
+import { DollPlayground, Toy } from '../../components/DollPlayground/DollPlayground.tsx';
+import { useEffect, useState } from 'react';
 
 export const DollsIsland = () => {
+  const [toys, setToys] = useState<Toy[]>([]);
+
+  useEffect(() => {
+    setToys([
+      {
+        id: self.crypto.randomUUID(),
+        type: 'doll',
+        head: 1,
+        body: 2,
+      },
+      {
+        id: self.crypto.randomUUID(),
+        type: 'generic',
+        variant: '1',
+      },
+    ]);
+  }, []);
+
+  const addDoll = () => {
+    setToys(currentToys => {
+      return [
+        ...currentToys,
+        {
+          id: self.crypto.randomUUID(),
+          type: 'doll',
+          head: Math.floor(Math.random() * (3 - 1 + 1) + 1),
+          body: Math.floor(Math.random() * (3 - 1 + 1) + 1),
+        },
+      ];
+    });
+  };
+
   return (
     <div className="puzzles-island ">
       <div className="container">
@@ -76,6 +108,8 @@ export const DollsIsland = () => {
         </section>
       </div>
       <DollBuilder/>
+      <button onClick={addDoll}>Agregar muñeca aleatoria</button>
+      <DollPlayground toys={toys} />
     </div>
   );
 };

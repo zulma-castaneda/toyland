@@ -182,7 +182,7 @@ export function DollPlayground({ toys }: DollPlaygroundProps) {
               return (
                 <div className='doll' key={toy.id} style={{scale: String(dollsScale)}} ref={storedToy.ref}>
                   <div className={`sprite sprite-${toy.head}`}/>
-                  <div className={`sprite sprite-p${toy.body}`}/>
+                  <div className={`sprite sprite-B${toy.body}`}/>
                 </div>
               );
             case 'generic':
