@@ -1,5 +1,5 @@
 import './Slider.css'
-import { useRef, ReactElement, createRef } from 'react';
+import { useRef, ReactElement, createRef, useState } from 'react';
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap/all';
 
@@ -7,6 +7,7 @@ interface SliderProps {
   slideDuration?: number;
   wrap?: boolean;
   slides: ReactElement[];
+  onChangeSlide: (index: number) => void;
 }
 
 // Based on https://codepen.io/GreenSock/pen/GRJwLNP
@@ -15,8 +16,10 @@ export function Slider(
     slideDuration = 0.3,
     wrap = true,
     slides,
+    onChangeSlide,
   }: SliderProps
 ) {
+  const directionsCounter = useState(0);
   const slidesRefs = useRef(slides.map(() => createRef<HTMLDivElement>()));
   const containerRef = useRef<HTMLDivElement | null>(null);
   const prevButtonRef = useRef<HTMLButtonElement | null>(null);
@@ -26,7 +29,7 @@ export function Slider(
     let touchstartX = 0;
     let touchendX = 0;
     let slideWidth = 0;
-    let slideHeigh = 0;
+    let slideHeight = 0;
     let wrapWidth = 0;
     const numSlides = slides.length;
     const proxy = document.createElement('div');
@@ -61,6 +64,13 @@ export function Slider(
     }
 
     function animateSlides(direction: number) {
+      directionsCounter[1](counter => {
+        const newDirectionCounter = counter + (direction * -1);
+        onChangeSlide(gsap.utils.wrap(0, numSlides)(newDirectionCounter));
+
+        return newDirectionCounter;
+      });
+
       slideAnimation.kill();
       const x = snapX(+gsap.getProperty(proxy, 'x') + direction * slideWidth);
 
@@ -73,10 +83,10 @@ export function Slider(
 
     function checkSwipeDirection() {
       if (touchendX < touchstartX) {
-        contextSafe!(() => animateSlides(-1))();
+        animateSlides(-1);
       }
       if (touchendX > touchstartX) {
-        contextSafe!(() => animateSlides(1))();
+        animateSlides(1);
       }
     }
 
@@ -84,7 +94,7 @@ export function Slider(
       const norm = (+gsap.getProperty(proxy, 'x') / wrapWidth) || 0;
 
       slideWidth = slidesRefs.current[0].current?.offsetWidth ?? 0;
-      slideHeigh = slidesRefs.current[0].current?.offsetHeight ?? 0;
+      slideHeight = slidesRefs.current[0].current?.offsetHeight ?? 0;
       wrapWidth = slideWidth * numSlides;
 
       gsap.set(proxy, {
@@ -92,32 +102,36 @@ export function Slider(
       });
 
       gsap.set(containerRef.current, {
-        height: slideHeigh,
+        height: slideHeight,
       });
 
       contextSafe!(() => animateSlides(0))();
       slideAnimation.progress(1);
     }
 
-    prevButtonRef.current?.addEventListener('click', function() {
-      contextSafe!(() => animateSlides(1))();
-    });
 
-    nextButtonRef.current?.addEventListener('click', function() {
-      contextSafe!(() => animateSlides(-1))();
-    });
-
-    containerRef.current?.addEventListener('touchstart', e => {
-      touchstartX = e.changedTouches[0].screenX;
-    });
-
-    containerRef.current?.addEventListener('touchend', e => {
+    const onPrevButtonClick = contextSafe!(() => animateSlides(1));
+    const onNextButtonClick = contextSafe!(() => animateSlides(-1));
+    const onTouchStart = (e: TouchEvent) => { touchstartX = e.changedTouches[0].screenX; };
+    const onTouchEnd = contextSafe!((e: TouchEvent) => {
       touchendX = e.changedTouches[0].screenX;
       checkSwipeDirection();
     });
 
+    prevButtonRef.current?.addEventListener('click', onPrevButtonClick);
+    nextButtonRef.current?.addEventListener('click', onNextButtonClick);
+    containerRef.current?.addEventListener('touchstart', onTouchStart);
+    containerRef.current?.addEventListener('touchend', onTouchEnd);
+
     window.onresize = contextSafe!(onResize);
     contextSafe!(onResize)();
+
+    return () => {
+      prevButtonRef.current?.removeEventListener('click', onPrevButtonClick);
+      nextButtonRef.current?.removeEventListener('click', onNextButtonClick);
+      containerRef.current?.removeEventListener('touchstart', onTouchStart);
+      containerRef.current?.removeEventListener('touchend', onTouchEnd);
+    };
   }, { scope: containerRef });
 
   return (

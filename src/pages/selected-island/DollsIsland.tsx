@@ -1,36 +1,20 @@
 import { DollBuilder } from "../../components/DollBuilder/DollBuilder.tsx";
 import { ColorfulText } from "../introduction/ColorfulText.tsx";
 import { DollPlayground, Toy } from '../../components/DollPlayground/DollPlayground.tsx';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export const DollsIsland = () => {
   const [toys, setToys] = useState<Toy[]>([]);
 
-  useEffect(() => {
-    setToys([
-      {
-        id: self.crypto.randomUUID(),
-        type: 'doll',
-        head: 1,
-        body: 2,
-      },
-      {
-        id: self.crypto.randomUUID(),
-        type: 'generic',
-        variant: '1',
-      },
-    ]);
-  }, []);
-
-  const addDoll = () => {
+  const addDoll = (head: number, body: number) => {
     setToys(currentToys => {
       return [
         ...currentToys,
         {
           id: self.crypto.randomUUID(),
           type: 'doll',
-          head: Math.floor(Math.random() * (3 - 1 + 1) + 1),
-          body: Math.floor(Math.random() * (3 - 1 + 1) + 1),
+          head,
+          body,
         },
       ];
     });
@@ -73,7 +57,8 @@ export const DollsIsland = () => {
         </section>
         <hr />
         <h3 className="bold-text header">Animate a armar tu propia Kokeshi</h3>
-        <DollBuilder />
+        <DollBuilder onCreateDoll={addDoll}/>
+        <DollPlayground toys={toys} />
 
         <section className="two-col-container">
           <div className="img-two-col">
@@ -107,9 +92,6 @@ export const DollsIsland = () => {
           </div>
         </section>
       </div>
-      <DollBuilder/>
-      <button onClick={addDoll}>Agregar muñeca aleatoria</button>
-      <DollPlayground toys={toys} />
     </div>
   );
 };
