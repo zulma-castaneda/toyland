@@ -82,3 +82,6 @@ figcaption {
     flex: initial; /* Volver al tamaño inicial en móvil */
   }
 }
+.chewy {
+  font-family: "Chewy";
+}

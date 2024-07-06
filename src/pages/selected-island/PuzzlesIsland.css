@@ -20,3 +20,33 @@
   justify-content: center;
   font-family: "Chewy";
 }
+.controls-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.controls-container {
+  margin: 20px;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.slider-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+input[type="range"] {
+  margin: 0 10px;
+}
+
+.pieceCount {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}

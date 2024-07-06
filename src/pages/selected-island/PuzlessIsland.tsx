@@ -3,6 +3,7 @@ import { JigsawPuzzle } from "./jigsaw-puzzle/jigsaw-puzzle";
 import puzzleImage from "../../../public/victorian-puzzle.png";
 import sliderImage from "../../../public/perrito.jpg";
 import Slider from "./slide-puzzle/slide-puzzle";
+import { ColorfulText } from "../introduction/ColorfulText";
 
 export const PuzzlesIsland = () => {
   const [pieceCount, setpieceCount] = useState(3);
@@ -16,8 +17,8 @@ export const PuzzlesIsland = () => {
   return (
     <div className="puzzles-island ">
       <div className="container">
-        <h2 className="header header-title">
-          Bienvenidos a la Isla de los Rompecabezas
+        <h2 className="header header-title bold-text">
+          Bienvenidos a <ColorfulText text="la Isla de los Rompecabezas" />
         </h2>
         <section className="two-col-container">
           <div className="img-two-col">
@@ -31,7 +32,7 @@ export const PuzzlesIsland = () => {
             </figure>
           </div>
           <div className="text-two-col">
-            <h3>Un Poco de Historia</h3>
+            <h3 className="bold-text">Un Poco de Historia</h3>
             <p>
               Hace mucho tiempo, un señor llamado John Spilsbury inventó algo
               muy especial: ¡los rompecabezas! Pero no eran como los que
@@ -50,31 +51,37 @@ export const PuzzlesIsland = () => {
         </section>
         <hr />
         <section>
-          <h3 className="header">
-            ¿Te animas a armar uno ahora? ¡Seguro que te divertirás! 🌟🧩
-          </h3>
+          <h3 className="header bold-text">¿Te animas a armar uno ahora?</h3>
           <p>
             Las piezas de este rompecabezas encajan perfectamente en su lugar y
             no se moverán si están en el lugar correcto. Puedes usar el control
-            para hacer el juego más fácil o más difícil. Este rompecabezas es
-            especial porque no tiene los bordes entrelazados que vemos en los
-            rompecabezas de hoy en día. ¡Tiene un estilo clásico victoriano,
-            como los rompecabezas antiguos!
+            para hacer el juego más fácil o más difícil. ¡Este rompecabezas
+            Tiene un estilo clásico victoriano, como los rompecabezas antiguos!
           </p>
-          <label htmlFor="slider">Fácil</label>
-          <input
-            type="range"
-            min="3"
-            max="10"
-            value={pieceCount}
-            id="slider"
-            onChange={handleDificultyChange}
-          />
-          <label htmlFor="slider">Difícil</label>
-          <p>
-            Cantidad de piezas:{" "}
-            <span id="pieceCount">{pieceCount * pieceCount}</span>
-          </p>
+          <div className="controls-container">
+            <div className="slider-container">
+              <label htmlFor="slider" className="chewy">
+                Fácil
+              </label>
+              <input
+                type="range"
+                min="3"
+                max="10"
+                value={pieceCount}
+                id="slider"
+                onChange={handleDificultyChange}
+              />
+              <label htmlFor="slider" className="chewy">
+                Difícil
+              </label>
+            </div>
+
+            <p>
+              Cantidad de piezas:{" "}
+              <span className="pieceCount">{pieceCount * pieceCount}</span>
+            </p>
+          </div>
+
           <div className="puzzle-container">
             <JigsawPuzzle
               imageSrc={puzzleImage}
@@ -84,7 +91,10 @@ export const PuzzlesIsland = () => {
             />
           </div>
           {isJigsaePuzzleSolved && (
-            <h3 className="header">Felicitaciones! lo lograste 🌟🧩</h3>
+            <h3 className="header">
+              <ColorfulText text="¡Felicitaciones! lo lograste" />
+              🌟🧩
+            </h3>
           )}
         </section>
         <hr />
@@ -128,6 +138,7 @@ export const PuzzlesIsland = () => {
             </figure>
           </div>
           <div className="text-two-col">
+            <h3 className="bold-text">Rompecabezas deslizante</h3>
             <p>
               Durante la Gran Depresión, uno de los tipos de rompecabezas más
               populares fueron los rompecabezas deslizantes. Estos desafiantes
