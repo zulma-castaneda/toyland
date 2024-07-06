@@ -39,7 +39,7 @@ type ToysStorage = {
   ref: RefObject<HTMLDivElement>,
 };
 
-const dollsScale = 0.5;
+const dollsScale = 0.3;
 const defaultXPosition = 300;
 const defaultYPosition = 35;
 const defaultBodyOptions: IChamferableBodyDefinition = {
@@ -117,11 +117,13 @@ export function DollPlayground({ toys }: DollPlaygroundProps) {
         if(!body || !ref.current) { continue; }
 
         const {x, y} = body.position;
+        const widthOffset = (ref.current.offsetWidth * (1 - dollsScale) / 2);
+        const heightOffset = (ref.current.offsetHeight * (1 - dollsScale) / 2);
         const dollWidth = ref.current.offsetWidth * dollsScale;
         const dollHeight = ref.current.offsetHeight * dollsScale;
 
-        ref.current.style.top = `${y - (dollHeight)}px`;
-        ref.current.style.left = `${x - (dollWidth)}px`;
+        ref.current.style.top = `${y - (dollHeight / 2) - (heightOffset)}px`;
+        ref.current.style.left = `${x  - (dollWidth / 2) - (widthOffset)}px`;
         ref.current.style.transform = `rotate(${body.angle}rad)`;
       }
     };
@@ -136,6 +138,13 @@ export function DollPlayground({ toys }: DollPlaygroundProps) {
       Composite.clear(engine.current.world, false, true)
       Engine.clear(engine.current);
       render.canvas.remove();
+
+      for (const [id, storedToy] of toysStorage.current) {
+        toysStorage.current.set(id, {
+          ...storedToy,
+          body: undefined,
+        });
+      }
     }
   }, []);
 
