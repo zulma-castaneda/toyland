@@ -1,4 +1,4 @@
-import { createRef, RefObject, useEffect, useRef } from 'react';
+import { createRef, RefObject, useEffect, useRef, useState } from 'react';
 import {
   Bodies,
   Body,
@@ -40,7 +40,6 @@ type ToysStorage = {
 };
 
 const dollsScale = 0.3;
-const defaultXPosition = 300;
 const defaultYPosition = 35;
 const defaultBodyOptions: IChamferableBodyDefinition = {
   density: 0.0005,
@@ -54,6 +53,20 @@ export function DollPlayground({ toys }: DollPlaygroundProps) {
   const scene = useRef<HTMLDivElement>(null);
   const engine = useRef<Engine>(Engine.create());
   const toysStorage = useRef<Map<Toy['id'], ToysStorage>>(new Map());
+  const [sceneWidth, setSceneWidth] = useState(0);
+
+  useEffect(() => {
+    const sceneRef = scene.current;
+    if(!sceneRef) { return; }
+    const observer = new ResizeObserver(() => {
+      setSceneWidth(sceneRef.offsetWidth ?? 0);
+    });
+    observer.observe(sceneRef);
+
+    return () => {
+      observer.unobserve(sceneRef);
+    };
+  }, [scene]);
 
   useEffect(() => {
     // create engine
@@ -64,7 +77,7 @@ export function DollPlayground({ toys }: DollPlaygroundProps) {
       element: scene.current!,
       engine: engine.current,
       options: {
-        width: 800,
+        width: sceneWidth,
         height: 600,
         wireframes: false,
         background: '#fff'
@@ -83,9 +96,9 @@ export function DollPlayground({ toys }: DollPlaygroundProps) {
     const options = { isStatic: true };
 
     Composite.add(world, [
-      Bodies.rectangle(400, -offset, 800.5 + 2 * offset, 50.5, options),
-      Bodies.rectangle(400, 600 + offset, 800.5 + 2 * offset, 50.5, options),
-      Bodies.rectangle(800 + offset, 300, 50.5, 600.5 + 2 * offset, options),
+      Bodies.rectangle(sceneWidth / 2, -offset, sceneWidth + 0.5 + 2 * offset, 50.5, options),
+      Bodies.rectangle(sceneWidth / 2, 600 + offset, sceneWidth + 0.5 + 2 * offset, 50.5, options),
+      Bodies.rectangle(sceneWidth + offset, 300, 50.5, 600.5 + 2 * offset, options),
       Bodies.rectangle(-offset, 300, 50.5, 600.5 + 2 * offset, options)
     ]);
 
@@ -109,7 +122,7 @@ export function DollPlayground({ toys }: DollPlaygroundProps) {
     // fit the render viewport to the scene
     Render.lookAt(render, {
       min: { x: 0, y: 0 },
-      max: { x: 800, y: 600 }
+      max: { x: sceneWidth, y: 600 }
     });
 
     const onRender = () => {
@@ -146,7 +159,7 @@ export function DollPlayground({ toys }: DollPlaygroundProps) {
         });
       }
     }
-  }, []);
+  }, [sceneWidth]);
 
   useEffect(() => {
     toys.forEach(toy => {
@@ -158,13 +171,13 @@ export function DollPlayground({ toys }: DollPlaygroundProps) {
       const dollWidth = toyRef.offsetWidth * dollsScale;
       const dollHeight = toyRef.offsetHeight * dollsScale;
 
-      const dollBody = Bodies.rectangle(defaultXPosition, defaultYPosition, dollWidth, dollHeight, defaultBodyOptions);
+      const dollBody = Bodies.rectangle(sceneWidth / 2, defaultYPosition, dollWidth, dollHeight, defaultBodyOptions);
 
       Composite.add(engine.current.world, [dollBody]);
       toyStored.body = dollBody;
       toysStorage.current.set(toy.id, toyStored);
     });
-  }, [toys]);
+  }, [toys, sceneWidth]);
 
   return (
     <div className='playground-container'>
