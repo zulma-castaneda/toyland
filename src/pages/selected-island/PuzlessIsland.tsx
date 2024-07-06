@@ -1,6 +1,7 @@
 import { ChangeEvent, useState } from "react";
 import { JigsawPuzzle } from "./jigsaw-puzzle/jigsaw-puzzle";
 import puzzleImage from "../../../public/victorian-puzzle.png";
+import Slider from "./slide-puzzle/slide-puzzle";
 
 export const PuzzlesIsland = () => {
   const [pieceCount, setpieceCount] = useState(3);
@@ -139,6 +140,9 @@ export const PuzzlesIsland = () => {
               a adultos.
             </p>
           </div>
+        </div>
+        <div className="slider-container">
+          <Slider />
         </div>
         <p>
           🌟 Así que, la próxima vez que hagas un rompecabezas, recuerda que
