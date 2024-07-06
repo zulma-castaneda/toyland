@@ -42,8 +42,7 @@ class GameState {
     this.moves = 0;
     this.board = GameState.getNewBoard();
     this.stack = [];
-    this.shuffle(); // we are still to define this method,
-    // let's put a stub in its place for now
+    this.shuffle();
   }
 
   shuffle() {
@@ -225,28 +224,35 @@ function useGameState() {
 interface TileProps {
   index: number;
   pos: number[];
-  imageSrc: string
+  imageSrc: string;
   onClick: () => void;
 }
 
 const Tile: React.FC<TileProps> = ({ index, pos, onClick, imageSrc }) => {
-  const top = pos[0]*100 + 5;
-  const left = pos[1]*100 + 5;
-  const bgLeft = (index%4)*100 + 5;
-  const bgTop = Math.floor(index/4)*100 + 5;
+  const top = pos[0] * 100 + 5;
+  const left = pos[1] * 100 + 5;
+  const bgLeft = (index % 3) * 100 + 5;
+  const bgTop = Math.floor(index / 3) * 100 + 5;
 
-  return <div
-    className='tile'
-    onClick={onClick}
-    style={{top, left,backgroundImage: `url(${imageSrc})`, backgroundPosition: `-${bgLeft}px -${bgTop}px`}}
-  />;
+  return (
+    <div
+      className="tile"
+      onClick={onClick}
+      style={{
+        top,
+        left,
+        backgroundImage: `url(${imageSrc})`,
+        backgroundPosition: `-${bgLeft}px -${bgTop}px`,
+      }}
+    />
+  );
 };
 
 interface SliderProps {
   imageSrc: string;
 }
 
-const Slider: React.FC<SliderProps> = ({imageSrc}) => {
+const Slider: React.FC<SliderProps> = ({ imageSrc }) => {
   const [board, moves, solved, newGame, undo, move] = useGameState();
 
   return (
@@ -259,7 +265,13 @@ const Slider: React.FC<SliderProps> = ({imageSrc}) => {
       </div>
       <div className="board">
         {board.slice(0, -1).map((pos, index) => (
-          <Tile key={index} index={index} pos={pos} onClick={move(index)} imageSrc={imageSrc} />
+          <Tile
+            key={index}
+            index={index}
+            pos={pos}
+            onClick={move(index)}
+            imageSrc={imageSrc}
+          />
         ))}
         {solved && (
           <div className="overlay">
