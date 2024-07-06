@@ -10,9 +10,5 @@
 
 .doll {
     position: absolute;
-    width: 100px;
-    height: 100px;
-    font-size: 10px;
     pointer-events: none;
-    background-size: 500px;
 }

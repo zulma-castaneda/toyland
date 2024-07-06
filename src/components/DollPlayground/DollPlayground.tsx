@@ -17,10 +17,13 @@ export function DollPlayground() {
   const scene = useRef<HTMLDivElement>(null);
   const doll = useRef<HTMLDivElement>(null);
   const engine = useRef<Engine>(Engine.create());
+  const dollsScale = 0.5;
 
   useEffect(() => {
     // create engine
     const world = engine.current.world;
+    const dollWidth = (doll.current?.offsetWidth ?? 0) * dollsScale;
+    const dollHeight = (doll.current?.offsetHeight ?? 0) * dollsScale;
 
     // create renderer
     const render = Render.create({
@@ -75,7 +78,7 @@ export function DollPlayground() {
       max: { x: 800, y: 600 }
     });
 
-    const dollBody = Bodies.rectangle(300, 35, 100, 100, {
+    const dollBody = Bodies.rectangle(300, 35, dollWidth, dollHeight, {
       density: 0.0005,
       frictionAir: 0.06,
       restitution: 0.3,
@@ -86,12 +89,11 @@ export function DollPlayground() {
 
     const onRender = () => {
       const {x, y} = dollBody.position;
-      doll.current!.style.top = `${y - 50}px`;
-      doll.current!.style.left = `${x - 50}px`;
+      doll.current!.style.top = `${y - dollHeight}px`;
+      doll.current!.style.left = `${x - dollWidth}px`;
       doll.current!.style.transform = `rotate(${dollBody.angle}rad)`;
     }
 
-    // Events.on(mouseConstraint, "mouseup", onClickWorld);
     Events.on(render, "afterRender", onRender);
 
     return () => {
@@ -99,7 +101,6 @@ export function DollPlayground() {
       Runner.stop(runner);
       Events.off(render, "afterRender", onRender);
 
-      Render.stop(render)
       Composite.clear(engine.current.world, false, true)
       Engine.clear(engine.current);
       render.canvas.remove();
@@ -108,7 +109,7 @@ export function DollPlayground() {
 
   return (
     <div className='playground-container'>
-      <div className='doll sprite sprite-1' ref={doll}></div>
+      <div className='doll sprite sprite-1' style={{scale: String(dollsScale)}} ref={doll}></div>
       <div className='playground-scene' ref={scene}/>
     </div>
   );
