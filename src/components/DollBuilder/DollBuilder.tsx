@@ -1,14 +1,12 @@
 import "./DollBuilder.css";
 import { Slider } from "../Slider/Slider.tsx";
-import { useState } from 'react';
 
 interface DollBuilderProps {
-  onCreateDoll: (head: number, body: number) => void;
+  onHeadUpdate: (head: number) => void;
+  onBodyUpdate: (body: number) => void;
 }
 
-export function DollBuilder({onCreateDoll}: DollBuilderProps) {
-  const [selectedHead, setSelectedHead] = useState(0);
-  const [selectedBody, setSelectedBody] = useState(0);
+export function DollBuilder({onHeadUpdate, onBodyUpdate}: DollBuilderProps) {
 
   const heads = [1, 2, 3].map((num) => (
     <div className={"sprite sprite-" + num}></div>
@@ -19,9 +17,9 @@ export function DollBuilder({onCreateDoll}: DollBuilderProps) {
 
   return (
     <div className="doll-builder-container">
-      <Slider onChangeSlide={setSelectedHead} slides={heads} />
-      <Slider onChangeSlide={setSelectedBody} slides={body} />
-      <button onClick={() => {onCreateDoll(selectedHead + 1, selectedBody + 1)}}>Agregar muñeca</button>
+      <Slider onChangeSlide={s => onHeadUpdate(s + 1)} slides={heads} />
+      <Slider onChangeSlide={s => onBodyUpdate(s + 1)} slides={body} />
+
     </div>
   );
 }

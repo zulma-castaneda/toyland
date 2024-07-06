@@ -6,8 +6,10 @@ import { v4 as uuid } from "uuid";
 
 export const DollsIsland = () => {
   const [toys, setToys] = useState<Toy[]>([]);
+  const [head, setHead] = useState(1);
+  const [body, setBody] = useState(1);
 
-  const addDoll = (head: number, body: number) => {
+  const addDoll = () => {
     setToys(currentToys => {
       return [
         ...currentToys,
@@ -58,7 +60,8 @@ export const DollsIsland = () => {
         </section>
         <hr />
         <h3 className="bold-text header">Animate a armar tu propia Kokeshi</h3>
-        <DollBuilder onCreateDoll={addDoll}/>
+        <DollBuilder onHeadUpdate={setHead} onBodyUpdate={setBody}/>
+        <button onClick={addDoll}>Agregar muñeca</button>
         <DollPlayground toys={toys} />
 
         <section className="two-col-container">
