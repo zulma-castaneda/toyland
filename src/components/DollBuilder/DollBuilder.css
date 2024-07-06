@@ -9,37 +9,37 @@
 }
 
 .sprite-1 {
-  width: 840px;
-  height: 805px;
+  width: 210px;
+  height: 201px;
   background-position: 0 0;
 }
 
 .sprite-2 {
-  width: 1066px;
-  height: 883px;
-  background-position: -840px 0;
+  width: 244px;
+  height: 202px;
+  background-position: -210px 0;
 }
 
 .sprite-3 {
-  width: 788px;
-  height: 897px;
-  background-position: 0 -883px;
+  width: 210px;
+  height: 201px;
+  background-position: 0 -202px;
 }
 
 .sprite-B1 {
-  width: 889px;
-  height: 1372px;
-  background-position: -788px -883px;
+  width: 223px;
+  height: 343px;
+  background-position: -210px -202px;
 }
 
 .sprite-B2 {
-  width: 876px;
-  height: 1358px;
-  background-position: -1906px 0;
+  width: 222px;
+  height: 343px;
+  background-position: -454px 0;
 }
 
 .sprite-B3 {
-  width: 871px;
-  height: 1431px;
-  background-position: -1677px -1358px;
+  width: 209px;
+  height: 343px;
+  background-position: -433px -343px;
 }
