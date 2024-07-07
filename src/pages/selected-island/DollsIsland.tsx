@@ -1,7 +1,30 @@
 import { DollBuilder } from "../../components/DollBuilder/DollBuilder.tsx";
 import { ColorfulText } from "../introduction/ColorfulText.tsx";
+import { DollPlayground, Toy } from '../../components/DollPlayground/DollPlayground.tsx';
+import { useState } from 'react';
+import { v4 as uuid } from "uuid";
 
 export const DollsIsland = () => {
+  const [toys, setToys] = useState<Toy[]>([]);
+  const [head, setHead] = useState(1);
+  const [body, setBody] = useState(1);
+
+  const addDoll = () => {
+    setToys(currentToys => {
+      return [
+        ...currentToys,
+        {
+          id: uuid(),
+          type: 'doll',
+          head,
+          body,
+        },
+      ];
+    });
+  };
+
+  const clearHouse = () => {setToys([])};
+
   return (
     <div className="puzzles-island ">
       <div className="container">
@@ -39,7 +62,10 @@ export const DollsIsland = () => {
         </section>
         <hr />
         <h3 className="bold-text header">Animate a armar tu propia Kokeshi</h3>
-        <DollBuilder />
+        <DollBuilder onHeadUpdate={setHead} onBodyUpdate={setBody}/>
+        <button onClick={addDoll}>Agregar muñeca</button>
+        <button onClick={clearHouse}>Limpiar casa</button>
+        <DollPlayground toys={toys} />
 
         <section className="two-col-container">
           <div className="img-two-col">

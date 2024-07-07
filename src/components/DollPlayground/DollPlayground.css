@@ -1,0 +1,17 @@
+.playground-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.playground-scene {
+    width: 100%;
+    height: 100%;
+}
+
+.doll {
+    position: absolute;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
