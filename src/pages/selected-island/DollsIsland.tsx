@@ -23,6 +23,19 @@ export const DollsIsland = () => {
     });
   };
 
+  const addToy = (variant: string) => {
+    setToys(currentToys => {
+      return [
+        ...currentToys,
+        {
+          id: uuid(),
+          type: 'generic',
+          variant,
+        },
+      ];
+    });
+  };
+
   const clearHouse = () => {setToys([])};
 
   return (
@@ -64,6 +77,12 @@ export const DollsIsland = () => {
         <h3 className="bold-text header">Animate a armar tu propia Kokeshi</h3>
         <DollBuilder onHeadUpdate={setHead} onBodyUpdate={setBody}/>
         <button onClick={addDoll}>Agregar muñeca</button>
+        <button onClick={() => addToy('console')}>Agregar bifé</button>
+        <button onClick={() => addToy('lamp')}>Agregar lámpara</button>
+        <button onClick={() => addToy('table')}>Agregar mesa</button>
+        <button onClick={() => addToy('chair1')}>Agregar silla 1</button>
+        <button onClick={() => addToy('chair2')}>Agregar silla 2</button>
+        <button onClick={() => addToy('chair3')}>Agregar silla 3</button>
         <button onClick={clearHouse}>Limpiar casa</button>
         <DollPlayground toys={toys} />
 

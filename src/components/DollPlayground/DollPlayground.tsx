@@ -37,9 +37,11 @@ export interface DollPlaygroundProps {
 type ToysStorage = {
   body?: Body,
   ref: RefObject<HTMLDivElement>,
+  toy: Toy,
 };
 
 const dollsScale = 0.3;
+const toyScale = 1;
 const defaultYPosition = 35;
 const defaultBodyOptions: IChamferableBodyDefinition = {
   density: 0.0005,
@@ -126,14 +128,15 @@ export function DollPlayground({ toys }: DollPlaygroundProps) {
     });
 
     const onRender = () => {
-      for (const { body, ref} of toysStorage.current.values()) {
+      for (const { body, ref, toy} of toysStorage.current.values()) {
         if(!body || !ref.current) { continue; }
 
+        const scale = toy.type === "doll" ? dollsScale : toyScale;
         const {x, y} = body.position;
-        const widthOffset = (ref.current.offsetWidth * (1 - dollsScale) / 2);
-        const heightOffset = (ref.current.offsetHeight * (1 - dollsScale) / 2);
-        const dollWidth = ref.current.offsetWidth * dollsScale;
-        const dollHeight = ref.current.offsetHeight * dollsScale;
+        const widthOffset = (ref.current.offsetWidth * (1 - scale) / 2);
+        const heightOffset = (ref.current.offsetHeight * (1 - scale) / 2);
+        const dollWidth = ref.current.offsetWidth * scale;
+        const dollHeight = ref.current.offsetHeight * scale;
 
         ref.current.style.top = `${y - (dollHeight / 2) - (heightOffset)}px`;
         ref.current.style.left = `${x  - (dollWidth / 2) - (widthOffset)}px`;
@@ -168,8 +171,9 @@ export function DollPlayground({ toys }: DollPlaygroundProps) {
       const toyBody = toyStored?.body;
       if(!toyStored || !toyRef || toyBody) { return; }
 
-      const dollWidth = toyRef.offsetWidth * dollsScale;
-      const dollHeight = toyRef.offsetHeight * dollsScale;
+      const scale = toy.type === "doll" ? dollsScale : toyScale;
+      const dollWidth = toyRef.offsetWidth * scale;
+      const dollHeight = toyRef.offsetHeight * scale;
 
       const dollBody = Bodies.rectangle(sceneWidth / 2, defaultYPosition, dollWidth, dollHeight, defaultBodyOptions);
 
@@ -194,22 +198,22 @@ export function DollPlayground({ toys }: DollPlaygroundProps) {
           let storedToy = toysStorage.current.get(toy.id);
 
           if(!storedToy) {
-            storedToy = { ref: createRef() };
+            storedToy = { ref: createRef(), toy };
             toysStorage.current.set(toy.id, storedToy);
           }
 
           switch (toy.type) {
             case 'doll':
               return (
-                <div className='doll' key={toy.id} style={{scale: String(dollsScale)}} ref={storedToy.ref}>
+                <div className='toy' key={toy.id} style={{scale: String(dollsScale)}} ref={storedToy.ref}>
                   <div className={`sprite sprite-${toy.head}`}/>
                   <div className={`sprite sprite-B${toy.body}`}/>
                 </div>
               );
             case 'generic':
               return (
-                <div key={toy.id} className='doll' style={{scale: String(dollsScale)}} ref={storedToy.ref}>
-                  <div className={`sprite sprite-${toy.variant}`}/>
+                <div key={toy.id} className='toy' style={{scale: String(toyScale)}} ref={storedToy.ref}>
+                  <div className={`furniture furniture-${toy.variant}`}/>
                 </div>
               );
           }
