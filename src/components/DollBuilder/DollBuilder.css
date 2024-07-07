@@ -1,4 +1,11 @@
 .doll-builder-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.doll-builder-container > * {
+  max-width: 500px;
 }
 
 /* Generated using CSS Sprite GeneratorFrom Dan's Tools: https://spritegen.website-performance.org/*/

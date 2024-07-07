@@ -130,8 +130,12 @@ export function Slider(
           <div className='slide' ref={slidesRefs.current[index]} key={index}>{content}</div>
         ))}
       </div>
-      <button className='prevButton' onClick={onPrevButtonClick}>{'<'}</button>
-      <button className='nextButton' onClick={onNextButtonClick}>{'>'}</button>
+      <div className='prevButton' onClick={onPrevButtonClick}>
+        <div/>
+      </div>
+      <div className='nextButton' onClick={onNextButtonClick}>
+        <div/>
+      </div>
     </div>
   );
 }
