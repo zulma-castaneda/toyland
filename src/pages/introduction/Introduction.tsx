@@ -1,6 +1,8 @@
 import "./Introduction.css";
 import { ScrollIndicator } from "../../components/ScrollIndicator/ScrollIndicator";
 import { ColorfulText } from "./ColorfulText";
+import puzzleIsland from "../../../public/puzzle-island.png";
+import dollsIsland from "../../../public/dolls-island.png";
 
 export function Introduction() {
   return (
@@ -58,7 +60,7 @@ export function Introduction() {
           </div>
           <div className="img-two-col">
             <figure>
-              <img src={"puzzle-island.png"} />
+              <img src={puzzleIsland} />
             </figure>
           </div>
         </section>
@@ -74,7 +76,7 @@ export function Introduction() {
           </div>
           <div className="img-two-col">
             <figure>
-              <img src={"dolls-island.png"} />
+              <img src={dollsIsland} />
             </figure>
           </div>
         </section>
