@@ -3,6 +3,7 @@ import { ColorfulText } from "../introduction/ColorfulText.tsx";
 import { DollPlayground, Toy } from '../../components/DollPlayground/DollPlayground.tsx';
 import { useState } from 'react';
 import { v4 as uuid } from "uuid";
+import {PaperButton} from "../../components/PaperButton/PaperButton.tsx";
 
 export const DollsIsland = () => {
   const [toys, setToys] = useState<Toy[]>([]);
@@ -23,7 +24,19 @@ export const DollsIsland = () => {
     });
   };
 
-  const addToy = (variant: string) => {
+  const addToy = () => {
+    const toysVariants = [
+      'console',
+      'lamp',
+      'table',
+      'chair1',
+      'chair2',
+      'chair3',
+    ];
+
+    const toyIndex = Math.floor(Math.random() * (toysVariants.length));
+    const variant = toysVariants[toyIndex];
+
     setToys(currentToys => {
       return [
         ...currentToys,
@@ -76,14 +89,12 @@ export const DollsIsland = () => {
         <hr />
         <h3 className="bold-text header">Animate a armar tu propia Kokeshi</h3>
         <DollBuilder onHeadUpdate={setHead} onBodyUpdate={setBody}/>
-        <button onClick={addDoll}>Agregar muñeca</button>
-        <button onClick={() => addToy('console')}>Agregar bifé</button>
-        <button onClick={() => addToy('lamp')}>Agregar lámpara</button>
-        <button onClick={() => addToy('table')}>Agregar mesa</button>
-        <button onClick={() => addToy('chair1')}>Agregar silla 1</button>
-        <button onClick={() => addToy('chair2')}>Agregar silla 2</button>
-        <button onClick={() => addToy('chair3')}>Agregar silla 3</button>
-        <button onClick={clearHouse}>Limpiar casa</button>
+        <div style={{textAlign: "center", margin: "3px"}}>
+          <PaperButton onClick={addDoll}>Agregar muñeca</PaperButton>
+          <PaperButton onClick={() => addToy()}>Agregar mueble</PaperButton>
+          <PaperButton onClick={clearHouse}>Limpiar casa</PaperButton>
+        </div>
+
         <DollPlayground toys={toys} />
 
         <section className="two-col-container">
