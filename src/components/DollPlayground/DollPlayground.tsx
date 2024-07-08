@@ -219,6 +219,10 @@ export function DollPlayground({ toys }: DollPlaygroundProps) {
           }
         })
       }
+      <div className='background'>
+        <div className='wall'/>
+        <div className='floor'/>
+      </div>
       <div className='playground-scene' ref={scene}/>
     </div>
   );
