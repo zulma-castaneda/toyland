@@ -123,9 +123,9 @@ export function Slider(
   }
 
   return (
-    <div className='slides-container' onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} ref={containerRef}>
+    <div className='slides-container' ref={containerRef}>
       <div ref={proxy}/>
-      <div className='slides-inner'>
+      <div className='slides-inner' onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
         {slides.map((content, index) => (
           <div className='slide' ref={slidesRefs.current[index]} key={index}>{content}</div>
         ))}

@@ -27,6 +27,7 @@
     right: 10px;
     height: 100%;
     width: 50px;
+    cursor: pointer;
 }
 
 .nextButton > div {
@@ -67,6 +68,7 @@
     left: 10px;
     height: 100%;
     width: 50px;
+    cursor: pointer;
 }
 
 .prevButton > div {
