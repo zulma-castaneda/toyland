@@ -260,7 +260,7 @@ const Slider: React.FC<SliderProps> = ({ imageSrc }) => {
       <div className="game-header">
         <div className="moves">{moves}</div>
         <button className="big-button" onClick={undo}>
-          UNDO
+          ↩️
         </button>
       </div>
       <div className="board">
