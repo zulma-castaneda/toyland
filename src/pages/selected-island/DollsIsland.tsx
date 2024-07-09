@@ -1,9 +1,12 @@
 import { DollBuilder } from "../../components/DollBuilder/DollBuilder.tsx";
 import { ColorfulText } from "../introduction/ColorfulText.tsx";
-import { DollPlayground, Toy } from '../../components/DollPlayground/DollPlayground.tsx';
-import { useState } from 'react';
+import {
+  DollPlayground,
+  Toy,
+} from "../../components/DollPlayground/DollPlayground.tsx";
+import { useState } from "react";
 import { v4 as uuid } from "uuid";
-import {PaperButton} from "../../components/PaperButton/PaperButton.tsx";
+import { PaperButton } from "../../components/PaperButton/PaperButton.tsx";
 
 export const DollsIsland = () => {
   const [toys, setToys] = useState<Toy[]>([]);
@@ -11,12 +14,12 @@ export const DollsIsland = () => {
   const [body, setBody] = useState(1);
 
   const addDoll = () => {
-    setToys(currentToys => {
+    setToys((currentToys) => {
       return [
         ...currentToys,
         {
           id: uuid(),
-          type: 'doll',
+          type: "doll",
           head,
           body,
         },
@@ -26,30 +29,32 @@ export const DollsIsland = () => {
 
   const addToy = () => {
     const toysVariants = [
-      'console',
-      'lamp',
-      'table',
-      'chair1',
-      'chair2',
-      'chair3',
+      "console",
+      "lamp",
+      "table",
+      "chair1",
+      "chair2",
+      "chair3",
     ];
 
-    const toyIndex = Math.floor(Math.random() * (toysVariants.length));
+    const toyIndex = Math.floor(Math.random() * toysVariants.length);
     const variant = toysVariants[toyIndex];
 
-    setToys(currentToys => {
+    setToys((currentToys) => {
       return [
         ...currentToys,
         {
           id: uuid(),
-          type: 'generic',
+          type: "generic",
           variant,
         },
       ];
     });
   };
 
-  const clearHouse = () => {setToys([])};
+  const clearHouse = () => {
+    setToys([]);
+  };
 
   return (
     <div className="puzzles-island ">
@@ -87,9 +92,9 @@ export const DollsIsland = () => {
           </div>
         </section>
         <hr />
-        <h3 className="bold-text header">Animate a armar tu propia Kokeshi</h3>
-        <DollBuilder onHeadUpdate={setHead} onBodyUpdate={setBody}/>
-        <div style={{textAlign: "center", margin: "3px"}}>
+        <h3 className="bold-text header">Arma tu propia Kokeshi</h3>
+        <DollBuilder onHeadUpdate={setHead} onBodyUpdate={setBody} />
+        <div style={{ textAlign: "center", margin: "3px" }}>
           <PaperButton onClick={addDoll}>Agregar muñeca</PaperButton>
           <PaperButton onClick={() => addToy()}>Agregar mueble</PaperButton>
           <PaperButton onClick={clearHouse}>Limpiar casa</PaperButton>

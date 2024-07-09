@@ -153,9 +153,18 @@ export const PuzzlesIsland = () => {
             </p>
           </div>
         </div>
-        <div className="slider-container">
-          <Slider imageSrc={sliderImage} />
+        <hr />
+        <div className="two-col-container">
+          <div className="text-two-col">
+            <h3 className="bold-text">Intentalo tu mismo</h3>
+          </div>
+          <div className="img-two-col">
+            <div className="slider-container">
+              <Slider imageSrc={sliderImage} />
+            </div>
+          </div>
         </div>
+
         <p>
           🌟 Así que, la próxima vez que hagas un rompecabezas, recuerda que
           estás siguiendo una tradición de cientos de años ¡Diviértete armando
@@ -169,7 +178,6 @@ export const PuzzlesIsland = () => {
             https://www.oldpuzzles.com/history-techniques-styles/jigsaw-puzzles-brief-history
           </a>
         </p>
-        https://www.oldpuzzles.com/history-techniques-styles/jigsaw-puzzles-brief-history
       </div>
     </div>
   );
