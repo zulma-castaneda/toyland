@@ -1,7 +1,13 @@
 import "./DollBuilder.css";
 import { Slider } from "../Slider/Slider.tsx";
 
-export function DollBuilder() {
+interface DollBuilderProps {
+  onHeadUpdate: (head: number) => void;
+  onBodyUpdate: (body: number) => void;
+}
+
+export function DollBuilder({onHeadUpdate, onBodyUpdate}: DollBuilderProps) {
+
   const heads = [1, 2, 3].map((num) => (
     <div className={"sprite sprite-" + num}></div>
   ));
@@ -11,8 +17,8 @@ export function DollBuilder() {
 
   return (
     <div className="doll-builder-container">
-      <Slider slides={heads} />
-      <Slider slides={body} />
+      <Slider onChangeSlide={s => onHeadUpdate(s + 1)} slides={heads} />
+      <Slider onChangeSlide={s => onBodyUpdate(s + 1)} slides={body} />
     </div>
   );
 }

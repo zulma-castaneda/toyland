@@ -21,14 +21,85 @@
     width: 100%;
 }
 
-.prevButton {
-    position: absolute;
-    top: 50%;
-    left: 10px;
-}
-
 .nextButton {
     position: absolute;
-    top: 50%;
+    top: 0;
     right: 10px;
+    height: 100%;
+    width: 50px;
+    cursor: pointer;
+}
+
+.nextButton > div {
+    top: 50%;
+    width: 20px;
+    height: 40px;
+    position: relative;
+    background: black;
+}
+
+.nextButton > div:before {
+    content: "";
+    position: absolute;
+    right: -20px;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-left: 20px solid black;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+}
+
+.nextButton > div:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-left: 20px solid white;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+}
+
+.prevButton {
+    position: absolute;
+    top: 0;
+    left: 10px;
+    height: 100%;
+    width: 50px;
+    cursor: pointer;
+}
+
+.prevButton > div {
+    left: 20px;
+    top: 50%;
+    width: 20px;
+    height: 40px;
+    position: relative;
+    background: black;
+}
+
+.prevButton > div:before {
+    content: "";
+    position: absolute;
+    right: 20px;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-right: 20px solid black;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+}
+
+.prevButton > div:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-right: 20px solid white;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
 }
