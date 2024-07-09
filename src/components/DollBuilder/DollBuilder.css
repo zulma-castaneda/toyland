@@ -10,7 +10,7 @@
 
 /* Generated using CSS Sprite GeneratorFrom Dan's Tools: https://spritegen.website-performance.org/*/
 .sprite {
-  background-image: url(../../../public/sprites.png);
+  background-image: url(/sprites.png);
   background-repeat: no-repeat;
   display: block;
 }

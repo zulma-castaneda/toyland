@@ -1,0 +1,83 @@
+.game-container {
+  width: 310px;
+  height: 410px;
+  background: #ececec;
+  outline: 1px black solid;
+}
+
+.game-header {
+  width: 85%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.moves {
+  width: 150px;
+  height: 100px;
+  padding: 5px;
+  padding-top: 40px;
+  position: relative;
+  line-height: 50px;
+  font-size: 36px;
+  font-weight: bold;
+  margin-top: 40px;
+
+  &:before {
+    content: "MOVS.";
+    display: block;
+    position: absolute;
+    top: 20px;
+    left: 5px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 20px;
+  }
+}
+
+.big-button {
+  display: block;
+  padding: 10px 20px;
+  text-align: center;
+  height: 50px;
+  line-height: 30px;
+  font-size: 30px;
+  font-weight: bold;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 0 10px #0002;
+  font-family: "Chewy";
+}
+
+.board {
+  width: 290px;
+  height: 290px;
+  position: relative;
+  background: #ddd;
+  padding: 10px;
+}
+
+.overlay {
+  width: 310px;
+  height: 310px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  background: #0004;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tile {
+  width: 95px;
+  height: 95px;
+  position: absolute;
+  background: white;
+  transition: all 0.1s ease-in-out;
+  border-radius: 2px;
+  background-size: 400px 400px;
+}

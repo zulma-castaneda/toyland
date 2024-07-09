@@ -11,6 +11,14 @@
   background-color: #faf9f6;
 }
 
+.dificulty-container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Chewy";
+  margin: 20px 0 10px 0;
+}
 .controls-container {
   display: flex;
   flex-direction: column;
@@ -19,7 +27,6 @@
 }
 .controls-container {
   margin: 20px;
-  padding: 20px;
   background-color: #f0f0f0;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -30,6 +37,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-direction: column;
 }
 
 input[type="range"] {

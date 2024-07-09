@@ -1,6 +1,8 @@
 import { ChangeEvent, useState } from "react";
 import { JigsawPuzzle } from "./jigsaw-puzzle/jigsaw-puzzle";
 import puzzleImage from "../../../public/victorian-puzzle.png";
+import sliderImage from "../../../public/papagayo2.png";
+import Slider from "./slide-puzzle/slide-puzzle";
 import { ColorfulText } from "../introduction/ColorfulText";
 
 export const PuzzlesIsland = () => {
@@ -57,7 +59,7 @@ export const PuzzlesIsland = () => {
             Tiene un estilo clásico victoriano, como los rompecabezas antiguos!
           </p>
           <div className="controls-container">
-            <div className="slider-container">
+            <div className="dificulty-container">
               <label htmlFor="slider" className="chewy">
                 Fácil
               </label>
@@ -150,6 +152,9 @@ export const PuzzlesIsland = () => {
               a adultos.
             </p>
           </div>
+        </div>
+        <div className="slider-container">
+          <Slider imageSrc={sliderImage} />
         </div>
         <p>
           🌟 Así que, la próxima vez que hagas un rompecabezas, recuerda que
