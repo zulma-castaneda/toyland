@@ -276,7 +276,7 @@ const Slider: React.FC<SliderProps> = ({ imageSrc }) => {
         {solved && (
           <div className="overlay">
             <button className="big-button" onClick={newGame}>
-              PLAY AGAIN
+              Jugar de nuevo
             </button>
           </div>
         )}

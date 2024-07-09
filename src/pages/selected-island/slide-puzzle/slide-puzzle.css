@@ -26,7 +26,7 @@
   margin-top: 40px;
 
   &:before {
-    content: "MOVS.";
+    content: "Movimientos";
     display: block;
     position: absolute;
     top: 20px;
